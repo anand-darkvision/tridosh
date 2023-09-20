@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "280490071403",
+    "firebase_url": "https://diet-8da90-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "diet-8da90",
+    "storage_bucket": "diet-8da90.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280490071403:android:fa991da89e30d3839ca82e",
+        "android_client_info": {
+          "package_name": "com.hext.dietrecall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280490071403-j9s4m6jgsm9k6p3gr6jb0h2hj4m1gtq5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hext.dietrecall",
+            "certificate_hash": "b9ba55e1f497b88a5db776a8b3c15303d8610184"
+          }
+        },
+        {
+          "client_id": "280490071403-2qgme0pogs03cct03dsb254j5p44bkm9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAShXagL4N0ajlTeAMZvKRa55c9x-zp4Z8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280490071403-2qgme0pogs03cct03dsb254j5p44bkm9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "280490071403-rc6c1bsvd1ud6n4utfj12jvaesfs98sg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hext.dietrecall"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
