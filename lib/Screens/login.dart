@@ -207,10 +207,11 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         onPressed: () async {
           try {
-            final result = await InternetAddress.lookup('example.com');
-            if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-              emailAndPassSignIn(registerEmail.text, registerPass.text);
-            }
+            // final result = await InternetAddress.lookup('example.com');
+            // if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+
+            // }
+            emailAndPassSignIn(registerEmail.text, registerPass.text);
           } on SocketException catch (_) {
             showFlushBar(context);
           }

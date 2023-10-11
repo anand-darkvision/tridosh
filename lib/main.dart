@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:dietrecall/Screens/NavBarContent/getReport.dart';
 import 'package:dietrecall/Screens/NavBarContent/preference.dart';
 import 'package:dietrecall/Screens/NavBarContent/recaller.dart';
@@ -19,25 +18,13 @@ import 'Screens/SplashScreen.dart';
 import 'Screens/login.dart';
 import 'package:workmanager/workmanager.dart';
 
-void callbackDispatcher() {
-  Workmanager().executeTask((taskName, inputData) async {
-    print("Task excuting" + taskName);
-    scheduleMicrotask(() {
-      NotificationService().showNotification(title: "test", body: "it works");
-    });
-    return Future.value(true);
-  });
-}
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService().initNotification();
-  Workmanager().initialize(callbackDispatcher);
   await Firebase.initializeApp();
 
   // Register callbackDispatcher() as a periodic task
-  Workmanager().registerPeriodicTask("notifi1", "backup",
-      frequency: const Duration(seconds: 2));
+  Workmanager().registerPeriodicTask("notifi1", "backup", frequency: const Duration(seconds: 2));
 
   runApp(const MainRoute());
 }
@@ -74,7 +61,7 @@ class _MainRouteState extends State<MainRoute> {
                 '/nutrition': (context) => NutritionValue(),
                 '/preference': (context) => const FoodPreference(),
               },
-              title: 'Endeavour',
+              title: 'DietRecall',
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 colorScheme: ColorScheme.fromSeed(
@@ -98,7 +85,7 @@ class _MainRouteState extends State<MainRoute> {
                 '/nutrition': (context) => NutritionValue(),
                 '/preference': (context) => const FoodPreference(),
               },
-              title: 'Endeavour',
+              title: 'DietRecall',
               debugShowCheckedModeBanner: false,
             ),
     );

@@ -34,28 +34,50 @@ class _SearchState extends State<Search> {
 
   Future<void> searchFood(String query) async {
     final String url =
-        'https://trackapi.nutritionix.com/v2/search/$query?results=0:50&fields=item_name,brand_name,item_id,nf_calories,nf_total_fat,images_front_full_url&appId=e975eb9b&appKey=3a38f2a27a0d580081ca6b91a4ed7847';
+        'https://trackapi.nutritionix.com/v2/search/instant?query=$query';
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'x-app-id': 'e975eb9b',
+      'x-app-key': '4a2e8dd857e4dce2a9873762e19cf980',
+    };
 
     try {
-      final response = await http.get(Uri.parse(url));
+      final response = await http.get(Uri.parse(url), headers: headers);
+      print(response.body);
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
-        final List<dynamic> hits = data['hits'];
+        final List<dynamic> common = data['common'] ?? [];
+        final List<dynamic> branded = data['branded'] ?? [];
         final List<FoodItem> foodItems = [];
 
-        for (final hit in hits) {
-          final String name = hit['fields']['item_name'];
-          final String brandName = hit['fields']['brand_name'];
-          final String itemId = hit['fields']['item_id'];
-          final double calories =
-              double.parse(hit['fields']['nf_calories'].toString());
-          final double totalFat =
-              double.parse(hit['fields']['nf_total_fat'].toString());
+        for (final hit in common) {
+          final String name = hit['food_name'];
+          final String brandName = hit['brand_name'] ?? ''; // Handle null brand_name
+          final double calories = hit['nf_calories']?.toDouble() ?? 0.0;
+          final double totalFat = hit['nf_total_fat']?.toDouble() ?? 0.0;
 
           final FoodItem foodItem = FoodItem(
             name: name,
             brandName: brandName,
-            itemId: itemId,
+            itemId:
+            '', // You can add the item ID if it's available in the response.
+            calories: calories,
+            totalFat: totalFat,
+          );
+          foodItems.add(foodItem);
+        }
+
+        for (final hit in branded) {
+          final String name = hit['food_name'];
+          final String brandName = hit['brand_name'] ?? ''; // Handle null brand_name
+          final double calories = hit['nf_calories']?.toDouble() ?? 0.0;
+          final double totalFat = hit['nf_total_fat']?.toDouble() ?? 0.0;
+
+          final FoodItem foodItem = FoodItem(
+            name: name,
+            brandName: brandName,
+            itemId:
+            '', // You can add the item ID if it's available in the response.
             calories: calories,
             totalFat: totalFat,
           );
@@ -75,6 +97,7 @@ class _SearchState extends State<Search> {
       // Show an error message or handle the error accordingly
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

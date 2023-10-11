@@ -50,245 +50,247 @@ class _UserScreenState extends State<UserScreen> {
         ? "${user?.displayName}"
         : "${loggedInUser.name}";
     return Center(
-      child: Column(
-        children: [
-          SizedBox(
-            height: height * 0.05 + width * 0.01,
-          ),
-          Text(
-            "Profile",
-            style: TextStyle(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: height * 0.05 + width * 0.01,
+            ),
+            Text(
+              "Profile",
+              style: TextStyle(
+                  color: Colors.grey[500],
+                  fontFamily: 'Comfortaa',
+                  fontSize: height * 0.02 + width * 0.01),
+            ),
+            SizedBox(
+              height: height * 0.03 + width * 0.01,
+            ),
+            CircleAvatar(
+              foregroundImage: profileObject,
+              radius: height * 0.09 + width * 0.001,
+            ),
+            SizedBox(
+              height: height * 0.02 + width * 0.01,
+            ),
+            Text(
+              nameValue,
+              style: TextStyle(
+                fontSize: height * 0.03 + width * 0.03,
+                fontFamily: 'signikaregular',
+                color: Colors.grey[700],
+              ),
+            ),
+            SizedBox(
+              height: height * 0.01 + width * 0.01,
+            ),
+            Text(
+              bodyType == null ? "Body Type Not Found" : "$bodyType",
+              style: TextStyle(
+                fontSize: height * 0.01 + width * 0.02,
+                fontFamily: 'signikaregular',
                 color: Colors.grey[500],
-                fontFamily: 'Comfortaa',
-                fontSize: height * 0.02 + width * 0.01),
-          ),
-          SizedBox(
-            height: height * 0.03 + width * 0.01,
-          ),
-          CircleAvatar(
-            foregroundImage: profileObject,
-            radius: height * 0.09 + width * 0.001,
-          ),
-          SizedBox(
-            height: height * 0.02 + width * 0.01,
-          ),
-          Text(
-            nameValue,
-            style: TextStyle(
-              fontSize: height * 0.03 + width * 0.03,
-              fontFamily: 'signikaregular',
-              color: Colors.grey[700],
-            ),
-          ),
-          SizedBox(
-            height: height * 0.01 + width * 0.01,
-          ),
-          Text(
-            bodyType == null ? "Body Type Not Found" : "$bodyType",
-            style: TextStyle(
-              fontSize: height * 0.01 + width * 0.02,
-              fontFamily: 'signikaregular',
-              color: Colors.grey[500],
-            ),
-          ),
-          SizedBox(
-            height: height * 0.03 + width * 0.01,
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/report');
-            },
-            child: Center(
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: width * 0.07 + height * 0.01,
-                  ),
-                  Container(
-                    width: width * 0.05 + height * 0.05,
-                    height: height * 0.05 + width * 0.05,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage("Assets/image/report.png"),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * 0.05 + height * 0.01,
-                  ),
-                  Text(
-                    "Get Report",
-                    style: TextStyle(
-                      fontSize: height * 0.014 + width * 0.02,
-                      fontFamily: 'Comfortaa',
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * 0.25 + height * 0.01,
-                  ),
-                  Icon(
-                    Icons.chevron_right_rounded,
-                    color: Colors.grey[600],
-                    size: height * 0.04 + width * 0.01,
-                  )
-                ],
               ),
             ),
-          ),
-          SizedBox(
-            height: height * 0.03 + width * 0.01,
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/recaller');
-            },
-            child: Center(
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: width * 0.07 + height * 0.01,
-                  ),
-                  Container(
-                    width: width * 0.05 + height * 0.05,
-                    height: height * 0.05 + width * 0.05,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage("Assets/image/recall.png"),
+            SizedBox(
+              height: height * 0.03 + width * 0.01,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/report');
+              },
+              child: Center(
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: width * 0.07 + height * 0.01,
+                    ),
+                    Container(
+                      width: width * 0.05 + height * 0.05,
+                      height: height * 0.05 + width * 0.05,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage("Assets/image/report.png"),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: width * 0.05 + height * 0.01,
-                  ),
-                  Text(
-                    "Recaller",
-                    style: TextStyle(
-                      fontSize: height * 0.014 + width * 0.02,
-                      fontFamily: 'Comfortaa',
-                      color: Colors.grey[600],
+                    SizedBox(
+                      width: width * 0.05 + height * 0.01,
                     ),
-                  ),
-                  SizedBox(
-                    width: width * 0.25 + height * 0.04,
-                  ),
-                  Icon(
-                    Icons.chevron_right_rounded,
-                    color: Colors.grey[600],
-                    size: height * 0.04 + width * 0.01,
-                  )
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: height * 0.03 + width * 0.01,
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/preference');
-            },
-            child: Center(
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: width * 0.07 + height * 0.01,
-                  ),
-                  Container(
-                    width: width * 0.05 + height * 0.05,
-                    height: height * 0.05 + width * 0.05,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage("Assets/image/setting.png"),
+                    Text(
+                      "Get Report",
+                      style: TextStyle(
+                        fontSize: height * 0.014 + width * 0.02,
+                        fontFamily: 'Comfortaa',
+                        color: Colors.grey[600],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: width * 0.05 + height * 0.01,
-                  ),
-                  Text(
-                    "Preference",
-                    style: TextStyle(
-                      fontSize: height * 0.014 + width * 0.02,
-                      fontFamily: 'Comfortaa',
-                      color: Colors.grey[600],
+                    SizedBox(
+                      width: width * 0.25 + height * 0.01,
                     ),
-                  ),
-                  SizedBox(
-                    width: width * 0.18 + height * 0.04,
-                  ),
-                  Icon(
-                    Icons.chevron_right_rounded,
-                    color: Colors.grey[600],
-                    size: height * 0.04 + width * 0.01,
-                  )
-                ],
+                    Icon(
+                      Icons.chevron_right_rounded,
+                      color: Colors.grey[600],
+                      size: height * 0.04 + width * 0.01,
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: height * 0.02 + width * 0.02,
-          ),
-          SizedBox(
-            height: height * 0.005 + width * 0.01,
-            width: width * 0.3 + height * 0.3,
-            child: Divider(
-              color: Colors.grey[200],
-              thickness: 1,
+            SizedBox(
+              height: height * 0.03 + width * 0.01,
             ),
-          ),
-          SizedBox(
-            height: height * 0.013 + width * 0.02,
-          ),
-          GestureDetector(
-            onTap: () {
-              final provider =
-                  Provider.of<GoogleSignInProvider>(context, listen: false);
-              provider.logOut(context);
-            },
-            child: Center(
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: width * 0.07 + height * 0.01,
-                  ),
-                  Container(
-                    width: width * 0.05 + height * 0.05,
-                    height: height * 0.05 + width * 0.05,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage("Assets/image/logout.png"),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/recaller');
+              },
+              child: Center(
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: width * 0.07 + height * 0.01,
+                    ),
+                    Container(
+                      width: width * 0.05 + height * 0.05,
+                      height: height * 0.05 + width * 0.05,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage("Assets/image/recall.png"),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: width * 0.05 + height * 0.01,
-                  ),
-                  Text(
-                    "Logout",
-                    style: TextStyle(
-                      fontSize: height * 0.014 + width * 0.02,
-                      fontFamily: 'Comfortaa',
-                      color: Colors.grey[600],
+                    SizedBox(
+                      width: width * 0.05 + height * 0.01,
                     ),
-                  ),
-                  SizedBox(
-                    width: width * 0.25 + height * 0.05,
-                  ),
-                  Icon(
-                    Icons.chevron_right_rounded,
-                    color: Colors.grey[600],
-                    size: height * 0.04 + width * 0.01,
-                  )
-                ],
+                    Text(
+                      "Recaller",
+                      style: TextStyle(
+                        fontSize: height * 0.014 + width * 0.02,
+                        fontFamily: 'Comfortaa',
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    SizedBox(
+                      width: width * 0.25 + height * 0.04,
+                    ),
+                    Icon(
+                      Icons.chevron_right_rounded,
+                      color: Colors.grey[600],
+                      size: height * 0.04 + width * 0.01,
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+            SizedBox(
+              height: height * 0.03 + width * 0.01,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/preference');
+              },
+              child: Center(
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: width * 0.07 + height * 0.01,
+                    ),
+                    Container(
+                      width: width * 0.05 + height * 0.05,
+                      height: height * 0.05 + width * 0.05,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage("Assets/image/setting.png"),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: width * 0.05 + height * 0.01,
+                    ),
+                    Text(
+                      "Preference",
+                      style: TextStyle(
+                        fontSize: height * 0.014 + width * 0.02,
+                        fontFamily: 'Comfortaa',
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    SizedBox(
+                      width: width * 0.18 + height * 0.04,
+                    ),
+                    Icon(
+                      Icons.chevron_right_rounded,
+                      color: Colors.grey[600],
+                      size: height * 0.04 + width * 0.01,
+                    )
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: height * 0.02 + width * 0.02,
+            ),
+            SizedBox(
+              height: height * 0.005 + width * 0.01,
+              width: width * 0.3 + height * 0.3,
+              child: Divider(
+                color: Colors.grey[200],
+                thickness: 1,
+              ),
+            ),
+            SizedBox(
+              height: height * 0.013 + width * 0.02,
+            ),
+            GestureDetector(
+              onTap: () {
+                final provider =
+                    Provider.of<GoogleSignInProvider>(context, listen: false);
+                provider.logOut(context);
+              },
+              child: Center(
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: width * 0.07 + height * 0.01,
+                    ),
+                    Container(
+                      width: width * 0.05 + height * 0.05,
+                      height: height * 0.05 + width * 0.05,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage("Assets/image/logout.png"),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: width * 0.05 + height * 0.01,
+                    ),
+                    Text(
+                      "Logout",
+                      style: TextStyle(
+                        fontSize: height * 0.014 + width * 0.02,
+                        fontFamily: 'Comfortaa',
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    SizedBox(
+                      width: width * 0.25 + height * 0.05,
+                    ),
+                    Icon(
+                      Icons.chevron_right_rounded,
+                      color: Colors.grey[600],
+                      size: height * 0.04 + width * 0.01,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

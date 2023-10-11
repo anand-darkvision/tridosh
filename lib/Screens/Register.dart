@@ -344,10 +344,11 @@ class _RegisterState extends State<Register> {
       ),
       onPressed: () async {
         try {
-          final result = await InternetAddress.lookup('example.com');
-          if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-            signUp(registerEmail.text, registerPass.text);
-          }
+          // final result = await InternetAddress.lookup('example.com');
+          // if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+
+          // }
+          signUp(registerEmail.text, registerPass.text);
         } on SocketException catch (_) {
           showFlushBar(context);
         }

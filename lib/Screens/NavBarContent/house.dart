@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dietrecall/Service/notifi_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:workmanager/src/workmanager.dart';
-import 'package:workmanager/workmanager.dart';
 
 import '../../Provider/Register_user_model.dart';
 
@@ -17,8 +16,10 @@ class House extends StatefulWidget {
 class _HouseState extends State<House> {
   //firebase
   User? user = FirebaseAuth.instance.currentUser!;
+  final database = FirebaseDatabase.instance;
   RegisterUserModel loggedInUser = RegisterUserModel();
   var auth = FirebaseAuth.instance;
+  String alco = '';
   //initstate
   @override
   void initState() {
@@ -33,12 +34,24 @@ class _HouseState extends State<House> {
     });
   }
 
+  Future<void> fetchUserData() async {
+    final database = FirebaseDatabase.instance;
+    final databaseRef = database.ref().child('/${user!.uid}/preference');
+    final snapshot = await databaseRef.get();
+    final userData = snapshot.value as Map<String, dynamic>;
+    setState(() {
+      alco = userData['Alcohol'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     //firstname retrieval
     var nameValue = ("${loggedInUser.name}".endsWith("null"))
         ? "${user?.displayName}"
         : "${loggedInUser.name}";
+    //preference check
+
     // screen height
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
@@ -138,7 +151,8 @@ class _HouseState extends State<House> {
                             // Navigator.pushReplacementNamed(
                             //     context, '/nutrition');
                             NotificationService().showNotification(
-                                title: "test", body: "it works");
+                                title: "Water Remainder",
+                                body: "Don't forgot get hydrate");
                           },
                           child: Center(
                             child: Row(
@@ -240,7 +254,8 @@ class _HouseState extends State<House> {
                         borderRadius: BorderRadius.circular(15.0)),
                   ),
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/weeklydiet');
+                    fetchUserData();
+                    print("this is " + alco);
                   },
                   child: Center(
                     child: Row(

@@ -75,6 +75,13 @@ dependencies:
   flutter_local_notifications: ^13.0.0
   #backgroud service
   workmanager: ^0.5.1
+  #pdf
+  pdf: ^3.10.4
+  #open file
+  open_file: ^3.3.2
+  #intl
+  intl: ^0.18.1
+  syncfusion_flutter_pdfviewer: ^20.4.54
 
 dev_dependencies:
   flutter_test:
@@ -118,6 +125,7 @@ flutter:
     - Assets/image/sunday.gif
     - Assets/image/friday.gif
     - Assets/image/setting.png
+    - Assets/image/404.gif
 
     # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
