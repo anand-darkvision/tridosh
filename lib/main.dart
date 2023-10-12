@@ -24,7 +24,7 @@ void main() async {
   await Firebase.initializeApp();
 
   // Register callbackDispatcher() as a periodic task
-  Workmanager().registerPeriodicTask("notifi1", "backup", frequency: const Duration(seconds: 2));
+  // Workmanager().registerPeriodicTask("notifi1", "backup", frequency: const Duration(seconds: 2));
 
   runApp(const MainRoute());
 }

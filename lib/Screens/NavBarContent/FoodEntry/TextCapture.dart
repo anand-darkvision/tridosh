@@ -97,8 +97,7 @@ class _TextCaptureState extends State<TextCapture> {
                       ),
                     ),
                     Radio(
-                      fillColor: MaterialStateColor.resolveWith(
-                          (states) => Colors.green),
+                      fillColor: MaterialStateColor.resolveWith((states) => Colors.green),
                       value: 0.0,
                       groupValue: val1,
                       onChanged: (value1) {
@@ -121,8 +120,7 @@ class _TextCaptureState extends State<TextCapture> {
                       ),
                     ),
                     Radio(
-                      fillColor: MaterialStateColor.resolveWith(
-                          (states) => Colors.green),
+                      fillColor: MaterialStateColor.resolveWith((states) => Colors.green),
                       value: 1.0,
                       groupValue: val1,
                       onChanged: (value1) {
@@ -155,8 +153,7 @@ class _TextCaptureState extends State<TextCapture> {
                       ),
                     ),
                     Radio(
-                      fillColor: MaterialStateColor.resolveWith(
-                          (states) => Colors.green),
+                      fillColor: MaterialStateColor.resolveWith((states) => Colors.green),
                       value: 2.0,
                       groupValue: val1,
                       onChanged: (value1) {
@@ -182,8 +179,7 @@ class _TextCaptureState extends State<TextCapture> {
                       ),
                     ),
                     Radio(
-                      fillColor: MaterialStateColor.resolveWith(
-                          (states) => Colors.green),
+                      fillColor: MaterialStateColor.resolveWith((states) => Colors.green),
                       value: 3.0,
                       groupValue: val1,
                       onChanged: (value1) {
@@ -295,14 +291,11 @@ class _TextCaptureState extends State<TextCapture> {
                 style: ElevatedButton.styleFrom(
                   elevation: 10,
                   backgroundColor: const Color.fromARGB(255, 145, 199, 136),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
                 ),
                 onPressed: () {
                   if (val1 == 0.0) {
-                    _ref = firebaseInstance
-                        .ref()
-                        .child('${user!.uid}/breakfast/$k');
+                    _ref = firebaseInstance.ref().child('${user!.uid}/breakfast/$k');
                     _ref.set({
                       "name": _foodName.text,
                       "count": _foodCount.text,
@@ -313,8 +306,7 @@ class _TextCaptureState extends State<TextCapture> {
                       val1 = -1.0;
                     });
                   } else if (val1 == 1.0) {
-                    _ref =
-                        firebaseInstance.ref().child('${user!.uid}/lunch/$k');
+                    _ref = firebaseInstance.ref().child('${user!.uid}/lunch/$k');
                     _ref.set({
                       "name": _foodName.text,
                       "count": _foodCount.text,
@@ -325,8 +317,7 @@ class _TextCaptureState extends State<TextCapture> {
                       val1 = -1.0;
                     });
                   } else if (val1 == 2.0) {
-                    _ref =
-                        firebaseInstance.ref().child('${user!.uid}/snacks/$k');
+                    _ref = firebaseInstance.ref().child('${user!.uid}/snacks/$k');
                     _ref.set({
                       "name": _foodName.text,
                       "count": _foodCount.text,
@@ -337,8 +328,7 @@ class _TextCaptureState extends State<TextCapture> {
                       val1 = -1.0;
                     });
                   } else if (val1 == 3.0) {
-                    _ref =
-                        firebaseInstance.ref().child('${user!.uid}/dinner/$k');
+                    _ref = firebaseInstance.ref().child('${user!.uid}/dinner/$k');
                     _ref.set({
                       "name": _foodName.text,
                       "count": _foodCount.text,
@@ -511,8 +501,7 @@ class _TextCaptureState extends State<TextCapture> {
               width: height * 0.1 + width * 0.3,
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(
-                      255, 145, 199, 136), // Button background color
+                  color: const Color.fromARGB(255, 145, 199, 136), // Button background color
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: CupertinoButton(
@@ -530,8 +519,7 @@ class _TextCaptureState extends State<TextCapture> {
                       // showFlushBar(context);
                       return;
                     }
-                    _ref =
-                        firebaseInstance.ref().child('${user!.uid}/$meal/$k');
+                    _ref = firebaseInstance.ref().child('${user!.uid}/$meal/$k');
                     _ref.set({
                       "name": _foodName.text,
                       "count": _foodCount.text,

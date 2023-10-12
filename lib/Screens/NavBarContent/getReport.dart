@@ -16,13 +16,7 @@ class ReportPage extends StatefulWidget {
 class _ReportPageState extends State<ReportPage> {
   final pdf = pw.Document();
 
-  @override
-  void initState() {
-    super.initState();
-    writeOnPdf();
-  }
-
-  void writeOnPdf() {
+  writeOnPdf() {
     String cdate = DateFormat("yyyy-MM-dd").format(DateTime.now());
     pdf.addPage(
       pw.MultiPage(
@@ -64,6 +58,12 @@ class _ReportPageState extends State<ReportPage> {
   }
 
   @override
+  void initState() {
+    writeOnPdf();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
@@ -89,48 +89,143 @@ class _ReportPageState extends State<ReportPage> {
                 ),
                 SizedBox(width: width * 0.01 + height * 0.01),
                 Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: const Color(0xFFfe8573),
-                  ),
-                  width: width * 0.4 + height * 0.16,
-                  height: height * 0.07 + height * 0.01,
-                  child: FutureBuilder<bool>(
-                    future: File("/storage/emulated/0/Download/report.pdf").exists(),
-                    builder: (context, snapshot) {
-                      if (snapshot.data == true) {
-                        return SfPdfViewer.file(File("/storage/emulated/0/Download/report.pdf"));
-                      } else {
-                        return Column(
-                          children: [
-                            const SizedBox(height: 20),
-                            SizedBox(
-                              width: 340,
-                              height: 400,
-                              child: Image.asset("Assets/image/404.gif"),
-                            ),
-                            const Text(
-                              "Download Pdf TO view",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 30,
-                                color: Colors.black,
-                                fontFamily: "Sharetech",
-                              ),
-                            ),
-                          ],
-                        );
-                      }
-                    },
-                  ),
-                ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: const Color(0xFFfe8573),
+                    ),
+                    width: width * 0.4 + height * 0.16,
+                    height: height * 0.07 + height * 0.01,
+                    child: Center(
+                      child: Text(
+                        "Report",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Comfortaa",
+                          fontSize: height * 0.02 + width * 0.01,
+                        ),
+                      ),
+                    )),
               ],
             ),
             SizedBox(height: height * 0.01 + width * 0.01),
             Container(
               width: width * 0.3 + height * 0.3,
-              height: height * 0.7 + width * 0.2,
+              height: height * 0.6 + width * 0.2,
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: const Color(0xFFeff7ee)),
+              child: FutureBuilder<bool>(
+                future: File("/storage/emulated/0/Download/report.pdf").exists(),
+                builder: (context, snapshot) {
+                  if (snapshot.data == true) {
+                    return SfPdfViewer.file(File("/storage/emulated/0/Download/report.pdf"));
+                  } else {
+                    return Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        SizedBox(
+                          width: 340,
+                          height: 400,
+                          child: Image.asset("Assets/image/404.gif"),
+                        ),
+                        Text(
+                          "Download Report",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: height * 0.02 + width * 0.01,
+                            color: Colors.black,
+                            fontFamily: "Comfortaa",
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                },
+              ),
+            ),
+            SizedBox(height: height * 0.03 + width * 0.01),
+            Row(
+              children: [
+                SizedBox(
+                  width: width * 0.015 + height * 0.01,
+                ),
+                SizedBox(
+                  height: height * 0.0010 + width * 0.1,
+                  width: height * 0.02 + width * 0.3,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 10,
+                      backgroundColor: const Color(0xFFfe8573),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+                    ),
+                    onPressed: () async {
+                      await savePdf();
+                      setState(() {});
+                    },
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            width: height * 0.01 + width * 0.002,
+                          ),
+                          Text(
+                            'Download',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: height * 0.013 + width * 0.01,
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_right_rounded,
+                            color: Colors.white,
+                            size: height * 0.020 + width * 0.01,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: width * 0.2 + height * 0.01,
+                ),
+                SizedBox(
+                  height: height * 0.0010 + width * 0.1,
+                  width: height * 0.02 + width * 0.3,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 10,
+                      backgroundColor: const Color(0xFFfe8573),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+                    ),
+                    onPressed: () async {
+                      File file = File("/storage/emulated/0/Download/report.pdf");
+                      await file.delete();
+                      setState(() {});
+                    },
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            width: height * 0.01 + width * 0.002,
+                          ),
+                          Text(
+                            'Delete',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: height * 0.013 + width * 0.01,
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_right_rounded,
+                            color: Colors.white,
+                            size: height * 0.020 + width * 0.01,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

@@ -117,13 +117,13 @@ flutter:
     - Assets/image/report.png
     - Assets/image/recall.png
     - Assets/image/Icecream.png
-    - Assets/image/moon.gif
-    - Assets/image/saturday.gif
-    - Assets/image/tuesday.gif
-    - Assets/image/wednesday.gif
-    - Assets/image/venux.gif
-    - Assets/image/sunday.gif
-    - Assets/image/friday.gif
+    - Assets/image/Monday.gif
+    - Assets/image/Saturday.gif
+    - Assets/image/Tuesday.gif
+    - Assets/image/Wednesday.gif
+    - Assets/image/Thursday.gif
+    - Assets/image/Sunday.gif
+    - Assets/image/Friday.gif
     - Assets/image/setting.png
     - Assets/image/404.gif
 

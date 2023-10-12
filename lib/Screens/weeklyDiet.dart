@@ -43,10 +43,7 @@ class _WeeklyDietState extends State<WeeklyDiet> {
                   ),
                   Text(
                     "Weekly Diet",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: height * 0.015 + width * 0.02,
-                        fontFamily: "Comfortaa"),
+                    style: TextStyle(color: Colors.black, fontSize: height * 0.015 + width * 0.02, fontFamily: "Comfortaa"),
                   ),
                 ],
               ),
@@ -69,14 +66,13 @@ class _WeeklyDietState extends State<WeeklyDiet> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Column(
-                        children: const <Widget>[
+                        children: <Widget>[
                           SizedBox(height: 50),
                           CircleAvatar(
                             maxRadius: 70,
-                            backgroundImage:
-                                AssetImage('Assets/image/moon.gif'),
+                            backgroundImage: AssetImage('Assets/image/Monday.gif'),
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -104,14 +100,13 @@ class _WeeklyDietState extends State<WeeklyDiet> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Column(
-                        children: const <Widget>[
+                        children: <Widget>[
                           SizedBox(height: 50),
                           CircleAvatar(
                             maxRadius: 70,
-                            backgroundImage:
-                                AssetImage('Assets/image/tuesday.gif'),
+                            backgroundImage: AssetImage('Assets/image/Tuesday.gif'),
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -139,14 +134,13 @@ class _WeeklyDietState extends State<WeeklyDiet> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Column(
-                        children: const <Widget>[
+                        children: <Widget>[
                           SizedBox(height: 50),
                           CircleAvatar(
                             maxRadius: 70,
-                            backgroundImage:
-                                AssetImage('Assets/image/wednesday.gif'),
+                            backgroundImage: AssetImage('Assets/image/Wednesday.gif'),
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -174,14 +168,13 @@ class _WeeklyDietState extends State<WeeklyDiet> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Column(
-                        children: const <Widget>[
+                        children: <Widget>[
                           SizedBox(height: 50),
                           CircleAvatar(
                             maxRadius: 70,
-                            backgroundImage:
-                                AssetImage('Assets/image/venux.gif'),
+                            backgroundImage: AssetImage('Assets/image/Thursday.gif'),
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -209,14 +202,13 @@ class _WeeklyDietState extends State<WeeklyDiet> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Column(
-                        children: const <Widget>[
+                        children: <Widget>[
                           SizedBox(height: 50),
                           CircleAvatar(
                             maxRadius: 70,
-                            backgroundImage:
-                                AssetImage('Assets/image/friday.gif'),
+                            backgroundImage: AssetImage('Assets/image/Friday.gif'),
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -244,14 +236,13 @@ class _WeeklyDietState extends State<WeeklyDiet> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Column(
-                        children: const <Widget>[
+                        children: <Widget>[
                           SizedBox(height: 50),
                           CircleAvatar(
                             maxRadius: 70,
-                            backgroundImage:
-                                AssetImage('Assets/image/saturday.gif'),
+                            backgroundImage: AssetImage('Assets/image/Saturday.gif'),
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -279,14 +270,13 @@ class _WeeklyDietState extends State<WeeklyDiet> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Column(
-                        children: const <Widget>[
+                        children: <Widget>[
                           SizedBox(height: 50),
                           CircleAvatar(
                             maxRadius: 70,
-                            backgroundImage:
-                                AssetImage('Assets/image/sunday.gif'),
+                            backgroundImage: AssetImage('Assets/image/Sunday.gif'),
                           ),
                           SizedBox(height: 20),
                           Text(

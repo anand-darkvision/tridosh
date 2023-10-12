@@ -14,15 +14,25 @@ Color second = const Color(0xFFfef9eb);
 
 class _CameraState extends State<Camera> {
   int _screenIndex = 0;
-  final screens = [
+
+  final List<Widget> screens = [
     const CameraCapture(),
-    const TextCapture(),
+    const TextCapture()
   ];
+
+  void _setScreenIndex(int index) {
+    setState(() {
+      first = index == 0 ? const Color(0xFFfe8573) : const Color(0xFFfef9eb);
+      second = index == 1 ? const Color(0xFFfe8573) : const Color(0xFFfef9eb);
+      _screenIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    //screen height and width
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -38,60 +48,12 @@ class _CameraState extends State<Camera> {
                     width: width * 0.01 + height * 0.07,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        first = const Color(0xFFfe8573);
-                        second = const Color(0xFFfef9eb);
-                        _screenIndex = 0;
-                      });
-                    },
-                    child: Container(
-                      height: height * 0.07 + width * 0.01,
-                      width: width * 0.15 + height * 0.1,
-                      decoration: BoxDecoration(
-                          color: first,
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(15),
-                              bottomLeft: Radius.circular(15))),
-                      child: Center(
-                        child: Text(
-                          "Camera",
-                          style: TextStyle(
-                            color: second,
-                            fontFamily: "Comfortaa",
-                            fontSize: height * 0.02 + width * 0.01,
-                          ),
-                        ),
-                      ),
-                    ),
+                    onTap: () => _setScreenIndex(0),
+                    child: _buildTabContainer("Camera", first, second, height, width),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        first = const Color(0xFFfef9eb);
-                        second = const Color(0xFFfe8573);
-                        _screenIndex = 1;
-                      });
-                    },
-                    child: Container(
-                      height: height * 0.07 + width * 0.01,
-                      width: width * 0.15 + height * 0.1,
-                      decoration: BoxDecoration(
-                          color: second,
-                          borderRadius: const BorderRadius.only(
-                              topRight: Radius.circular(15),
-                              bottomRight: Radius.circular(15))),
-                      child: Center(
-                        child: Text(
-                          "Text",
-                          style: TextStyle(
-                            color: first,
-                            fontFamily: "Comfortaa",
-                            fontSize: height * 0.02 + width * 0.01,
-                          ),
-                        ),
-                      ),
-                    ),
+                    onTap: () => _setScreenIndex(1),
+                    child: _buildTabContainer("Text", second, first, height, width),
                   ),
                 ],
               ),
@@ -102,11 +64,38 @@ class _CameraState extends State<Camera> {
                 width: width * 0.3 + height * 0.3,
                 height: height * 0.6 + width * 0.2,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.white),
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                ),
                 child: screens[_screenIndex],
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTabContainer(String label, Color bgColor, Color textColor, double height, double width) {
+    return Container(
+      height: height * 0.07 + width * 0.01,
+      width: width * 0.15 + height * 0.1,
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(15),
+          bottomLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+          bottomRight: Radius.circular(15),
+        ),
+      ),
+      child: Center(
+        child: Text(
+          label,
+          style: TextStyle(
+            color: textColor,
+            fontFamily: "Comfortaa",
+            fontSize: height * 0.02 + width * 0.01,
           ),
         ),
       ),

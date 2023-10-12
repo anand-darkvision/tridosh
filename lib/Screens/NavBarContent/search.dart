@@ -33,8 +33,7 @@ class _SearchState extends State<Search> {
   List<FoodItem> _foodItems = [];
 
   Future<void> searchFood(String query) async {
-    final String url =
-        'https://trackapi.nutritionix.com/v2/search/instant?query=$query';
+    final String url = 'https://trackapi.nutritionix.com/v2/search/instant?query=$query';
     final Map<String, String> headers = {
       'Content-Type': 'application/json',
       'x-app-id': 'e975eb9b',
@@ -43,7 +42,6 @@ class _SearchState extends State<Search> {
 
     try {
       final response = await http.get(Uri.parse(url), headers: headers);
-      print(response.body);
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
         final List<dynamic> common = data['common'] ?? [];
@@ -59,8 +57,7 @@ class _SearchState extends State<Search> {
           final FoodItem foodItem = FoodItem(
             name: name,
             brandName: brandName,
-            itemId:
-            '', // You can add the item ID if it's available in the response.
+            itemId: '', // You can add the item ID if it's available in the response.
             calories: calories,
             totalFat: totalFat,
           );
@@ -76,8 +73,7 @@ class _SearchState extends State<Search> {
           final FoodItem foodItem = FoodItem(
             name: name,
             brandName: brandName,
-            itemId:
-            '', // You can add the item ID if it's available in the response.
+            itemId: '', // You can add the item ID if it's available in the response.
             calories: calories,
             totalFat: totalFat,
           );
@@ -98,123 +94,167 @@ class _SearchState extends State<Search> {
     }
   }
 
+  Widget buildSearchInput(BuildContext context) {
+    return Platform.isAndroid
+        ? TextFormField(
+            minLines: null,
+            maxLines: null,
+            expands: true,
+            keyboardType: TextInputType.text,
+            textAlignVertical: TextAlignVertical.center,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 18.0, // Use a specific font size
+            ),
+            controller: _searchController,
+            decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
+              hintText: "Search",
+              hintStyle: const TextStyle(
+                color: Colors.grey,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: const BorderSide(color: Colors.black),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: const BorderSide(color: Colors.black),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 2.0,
+              ),
+              suffixIcon: IconButton(
+                icon: const Icon(
+                  FontAwesomeIcons.search,
+                  color: Colors.black,
+                  size: 18.0, // Use a specific icon size
+                ),
+                onPressed: () {
+                  final query = _searchController.text;
+                  searchFood(query);
+                },
+              ),
+            ),
+          )
+        : CupertinoTextField(
+            keyboardType: TextInputType.text,
+            padding: const EdgeInsets.symmetric(
+              vertical: 8.0,
+              horizontal: 8.0,
+            ),
+            controller: _searchController,
+            placeholder: 'Search',
+            placeholderStyle: const TextStyle(
+              color: Colors.grey,
+            ),
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 18.0, // Use a specific font size
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              border: Border.all(color: Colors.black),
+            ),
+            suffix: CupertinoButton(
+              child: const Icon(
+                FontAwesomeIcons.search,
+                color: Colors.black,
+                size: 18.0, // Use a specific icon size
+              ),
+              onPressed: () {
+                final query = _searchController.text;
+                searchFood(query);
+              },
+            ),
+          );
+  }
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
 
-    Widget content;
-
-    if (Platform.isAndroid) {
-      content = Scaffold(
+    return SafeArea(
+      child: Scaffold(
         backgroundColor: Colors.white,
         body: Column(
           children: [
             SizedBox(
-              height: height * 0.1 + width * 0.03,
+              height: height * 0.02 + width * 0.02, // Adjust height as needed
             ),
             SizedBox(
-              height: height * 0.07 + width * 0.01,
-              width: width * 0.3 + height * 0.25,
-              child: TextFormField(
-                minLines: null,
-                maxLines: null,
-                expands: true,
-                textAlignVertical: TextAlignVertical.center,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: height * 0.018 + width * 0.018,
-                ),
-                controller: _searchController,
-                decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  filled: true,
-                  hintText: "Search",
-                  hintStyle: const TextStyle(
-                    color: Colors.grey,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: const BorderSide(color: Colors.black),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: const BorderSide(color: Colors.black),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: height * 0.008 + width * 0.008,
-                    horizontal: height * 0.008 + width * 0.008,
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      FontAwesomeIcons.search,
-                      color: Colors.black,
-                      size: height * 0.018 + width * 0.018,
-                    ),
-                    onPressed: () {
-                      final query = _searchController.text;
-                      searchFood(query);
-                    },
-                  ),
-                ),
-              ),
+              height: height * 0.04 + width * 0.04, // Adjust height as needed
+              width: height * 0.2 + width * 0.15, // Adjust width as needed
+              child: buildSearchInput(context),
             ),
-            SizedBox(
-              height: height * 0.03 + width * 0.03,
+            const SizedBox(
+              height: 30.0, // Adjust height as needed
             ),
             Expanded(
               child: ListView.builder(
                 itemCount: _foodItems.length,
                 itemBuilder: (BuildContext context, int index) {
                   final foodItem = _foodItems[index];
-                  return Card(
-                    elevation: 2.0,
-                    margin: EdgeInsets.symmetric(
-                      vertical: height * 0.01 + width * 0.01,
-                      horizontal: width * 0.04 + height * 0.04,
-                    ),
-                    child: ListTile(
-                      title: Text(
-                        foodItem.name,
-                        style: TextStyle(
-                          fontSize: height * 0.018 + width * 0.018,
-                          fontFamily: "Comfortaa",
-                        ),
+                  return Container(
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(25)),
+                    child: Card(
+                      color: const Color.fromARGB(255, 177, 222, 169),
+                      elevation: 2.0,
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 15.0, // Adjust vertical margin as needed
+                        horizontal: 20.0, // Adjust horizontal margin as needed
                       ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: height * 0.01 + width * 0.01),
-                          Text(
-                            'Brand: ${foodItem.brandName}',
-                            style: TextStyle(
-                              fontSize: height * 0.015 + width * 0.015,
-                              fontFamily: "Comfortaa",
-                            ),
+                      child: ListTile(
+                        title: Text(
+                          foodItem.name,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.0, // Use a specific font size
+                            fontFamily: "Comfortaa",
+                            fontWeight: FontWeight.bold,
                           ),
-                          SizedBox(height: height * 0.01 + width * 0.01),
-                          Text(
-                            'Calories: ${foodItem.calories}',
-                            style: TextStyle(
-                              fontSize: height * 0.015 + width * 0.015,
-                              fontFamily: "Comfortaa",
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 10.0), // Adjust height as needed
+                            Text(
+                              'Brand: ${foodItem.brandName}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18.0, // Use a specific font size
+                                fontFamily: "Comfortaa",
+                              ),
                             ),
-                          ),
-                          SizedBox(height: height * 0.01 + width * 0.01),
-                          Text(
-                            'Total Fat: ${foodItem.totalFat}',
-                            style: TextStyle(
-                              fontSize: height * 0.015 + width * 0.015,
-                              fontFamily: "Comfortaa",
+                            const SizedBox(height: 10.0), // Adjust height as needed
+                            Text(
+                              'Calories: ${foodItem.calories}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18.0, // Use a specific font size
+                                fontFamily: "Comfortaa",
+                              ),
                             ),
-                          ),
-                          SizedBox(height: height * 0.01 + width * 0.01),
-                        ],
+                            const SizedBox(height: 10.0), // Adjust height as needed
+                            Text(
+                              'Total Fat: ${foodItem.totalFat}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18.0, // Use a specific font size
+                                fontFamily: "Comfortaa",
+                              ),
+                            ),
+                            const SizedBox(height: 10.0), // Adjust height as needed
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -223,117 +263,7 @@ class _SearchState extends State<Search> {
             ),
           ],
         ),
-      );
-    } else if (Platform.isIOS) {
-      content = CupertinoPageScaffold(
-        backgroundColor: Colors.white,
-        child: SafeArea(
-          child: Column(
-            children: [
-              SizedBox(height: height * 0.01 * width * 0.007),
-              SizedBox(
-                height: height * 0.07 + width * 0.01,
-                width: width * 0.3 + height * 0.25,
-                child: CupertinoTextField(
-                  padding: EdgeInsets.symmetric(
-                    vertical: height * 0.008 + width * 0.008,
-                    horizontal: height * 0.008 + width * 0.008,
-                  ),
-                  controller: _searchController,
-                  placeholder: 'Search',
-                  placeholderStyle: const TextStyle(
-                    color: Colors.grey,
-                  ),
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: height * 0.018 + width * 0.018,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(color: Colors.black),
-                  ),
-                  suffix: CupertinoButton(
-                    child: Icon(
-                      FontAwesomeIcons.search,
-                      color: Colors.black,
-                      size: height * 0.018 + width * 0.018,
-                    ),
-                    onPressed: () {
-                      final query = _searchController.text;
-                      searchFood(query);
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: height * 0.03 + width * 0.03,
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _foodItems.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final foodItem = _foodItems[index];
-                    return Card(
-                      elevation: 2.0,
-                      margin: EdgeInsets.symmetric(
-                        vertical: height * 0.01 + width * 0.01,
-                        horizontal: width * 0.04 + height * 0.04,
-                      ),
-                      child: ListTile(
-                        title: Text(
-                          foodItem.name,
-                          style: TextStyle(
-                            fontSize: height * 0.018 + width * 0.018,
-                            fontFamily: "Comfortaa",
-                          ),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: height * 0.01 + width * 0.01),
-                            Text(
-                              'Brand: ${foodItem.brandName}',
-                              style: TextStyle(
-                                fontSize: height * 0.015 + width * 0.015,
-                                fontFamily: "Comfortaa",
-                              ),
-                            ),
-                            SizedBox(height: height * 0.01 + width * 0.01),
-                            Text(
-                              'Calories: ${foodItem.calories}',
-                              style: TextStyle(
-                                fontSize: height * 0.015 + width * 0.015,
-                                fontFamily: "Comfortaa",
-                              ),
-                            ),
-                            SizedBox(height: height * 0.01 + width * 0.01),
-                            Text(
-                              'Total Fat: ${foodItem.totalFat}',
-                              style: TextStyle(
-                                fontSize: height * 0.015 + width * 0.015,
-                                fontFamily: "Comfortaa",
-                              ),
-                            ),
-                            SizedBox(height: height * 0.01 + width * 0.01),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    } else {
-      // Handle other platforms
-      content = const Center(
-        child: Text('Unsupported platform'),
-      );
-    }
-
-    return content;
+      ),
+    );
   }
 }

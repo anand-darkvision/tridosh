@@ -29,97 +29,90 @@ class _BreakFastRecallerState extends State<BreakFastRecaller> {
           g = v.replaceAll(RegExp("{|}|count: |name: "), "");
           g.trim();
           l = g.split(',');
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  width: width * 0.25 + height * 0.25,
-                  height: height * 0.15 + width * 0.15,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: const Color.fromARGB(255, 145, 199, 136),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          return Card(
+            elevation: 5, // Add a subtle shadow to the card
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0), // Rounded corners
+            ),
+            child: Container(
+              padding: const EdgeInsets.all(30.0),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [
+                    Color(0xFF91C788), // Replace this with your desired gradient colors
+                    Color(0xFF5A9653),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: width * 0.01 + height * 0.01), // Adjust the spacing as needed
+                  Row(
                     children: [
-                      SizedBox(
-                        height: height * 0.01 + width * 0.01,
+                      SizedBox(width: width * 0.01 + height * 0.01),
+                      Text(
+                        "Food Name: ",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "signikasemibold",
+                          fontSize: 18.0, // Adjust the font size
+                        ),
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: width * 0.03 + height * 0.02,
-                          ),
-                          Text(
-                            "FoodName : ",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "signikasemibold",
-                              fontSize: height * 0.015 + width * 0.015,
-                            ),
-                          ),
-                          Text(
-                            l[1],
-                            style: TextStyle(
-                              color: Colors.grey[200],
-                              fontFamily: "signikasemibold",
-                              fontSize: height * 0.015 + width * 0.015,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: height * 0.02 + width * 0.01,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: width * 0.03 + height * 0.02,
-                          ),
-                          Text(
-                            "Servings : ",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "signikasemibold",
-                              fontSize: height * 0.015 + width * 0.015,
-                            ),
-                          ),
-                          Text(
-                            l[0],
-                            style: TextStyle(
-                              color: Colors.grey[200],
-                              fontFamily: "signikasemibold",
-                              fontSize: height * 0.015 + width * 0.015,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: height * 0.03 + width * 0.01,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: width * 0.3 + height * 0.13,
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              Icons.delete,
-                              color: Colors.white,
-                              size: height * 0.04 + width * 0.01,
-                            ),
-                            onPressed: () {
-                              ref.child(snapshot.key!).remove();
-                            },
-                          ),
-                        ],
+                      Text(
+                        l[1],
+                        style: TextStyle(
+                          color: Colors.grey[200],
+                          fontFamily: "signikasemibold",
+                          fontSize: 18.0, // Adjust the font size
+                        ),
                       ),
                     ],
                   ),
-                ),
+                  SizedBox(height: 20.0), // Adjust the spacing as needed
+                  Row(
+                    children: [
+                      SizedBox(width: 10.0),
+                      Text(
+                        "Servings: ",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "signikasemibold",
+                          fontSize: 18.0, // Adjust the font size
+                        ),
+                      ),
+                      Text(
+                        l[0],
+                        style: TextStyle(
+                          color: Colors.grey[200],
+                          fontFamily: "signikasemibold",
+                          fontSize: 18.0, // Adjust the font size
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30.0), // Adjust the spacing as needed
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                          size: 30.0, // Adjust the icon size
+                        ),
+                        onPressed: () {
+                          ref.child(snapshot.key!).remove();
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
+            ),
           );
         });
   }

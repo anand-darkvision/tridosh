@@ -12,24 +12,21 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-
   var auth = FirebaseAuth.instance;
 
   @override
   void initState() {
     super.initState();
     final user = auth.currentUser;
-    if(user!=null){
+    if (user != null) {
       Timer(const Duration(seconds: 2), () {
-        Navigator.pushReplacementNamed(context,'/homepage');
+        Navigator.pushReplacementNamed(context, '/homepage');
       });
-    }else{
+    } else {
       Timer(const Duration(seconds: 2), () {
-        Navigator.pushReplacementNamed(context,'/introscreen');
+        Navigator.pushReplacementNamed(context, '/introscreen');
       });
     }
-
   }
 
   @override
@@ -44,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 children: <Widget>[
                   SizedBox(height: height * 0.47),
                   Text(
-                    'Diet Recall',
+                    'Tridosh',
                     style: TextStyle(
                       fontFamily: 'Comfortaa',
                       fontSize: height * 0.001 + width * 0.13,
@@ -63,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 children: <Widget>[
                   SizedBox(height: height * 0.47),
                   Text(
-                    'Diet Recall',
+                    'Tridosh',
                     style: TextStyle(
                       fontFamily: 'Comfortaa',
                       fontSize: height * 0.001 + width * 0.13,
