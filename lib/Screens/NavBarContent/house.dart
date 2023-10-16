@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dietrecall/Service/notifi_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -19,31 +18,26 @@ class _HouseState extends State<House> {
   final database = FirebaseDatabase.instance;
   RegisterUserModel loggedInUser = RegisterUserModel();
   var auth = FirebaseAuth.instance;
-  String alco = '';
   //initstate
   @override
   void initState() {
     super.initState();
-    FirebaseFirestore.instance.collection("users").doc(user!.email).get().then((value) {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.email)
+        .get()
+        .then((value) {
       loggedInUser = RegisterUserModel.fromMap(value.data());
       setState(() {});
-    });
-  }
-
-  Future<void> fetchUserData() async {
-    final database = FirebaseDatabase.instance;
-    final databaseRef = database.ref().child('/${user!.uid}/preference');
-    final snapshot = await databaseRef.get();
-    final userData = snapshot.value as Map<String, dynamic>;
-    setState(() {
-      alco = userData['Alcohol'];
     });
   }
 
   @override
   Widget build(BuildContext context) {
     //firstname retrieval
-    var nameValue = ("${loggedInUser.name}".endsWith("null")) ? "${user?.displayName}" : "${loggedInUser.name}";
+    var nameValue = ("${loggedInUser.name}".endsWith("null"))
+        ? "${user?.displayName}"
+        : "${loggedInUser.name}";
     //preference check
 
     // screen height
@@ -68,7 +62,10 @@ class _HouseState extends State<House> {
         ),
         Text(
           "Find, track and eat healthy food.",
-          style: TextStyle(fontSize: height * 0.01 + width * 0.03, fontFamily: "signikaregular", color: Colors.grey[600]),
+          style: TextStyle(
+              fontSize: height * 0.01 + width * 0.03,
+              fontFamily: "signikaregular",
+              color: Colors.grey[600]),
         ),
         SizedBox(height: height * 0.03 + width * 0.02),
         Container(
@@ -135,12 +132,15 @@ class _HouseState extends State<House> {
                           style: ElevatedButton.styleFrom(
                             elevation: 10,
                             backgroundColor: const Color(0xFFfe8573),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0)),
                           ),
                           onPressed: () {
-                            // Navigator.pushReplacementNamed(
-                            //     context, '/nutrition');
-                            NotificationService().showNotification(title: "Water Remainder", body: "Don't forgot get hydrate");
+                            Navigator.pushReplacementNamed(
+                                context, '/nutrition');
+                            // NotificationService().showNotification(
+                            //     title: "Water Remainder",
+                            //     body: "Don't forgot get hydrate");
                           },
                           child: Center(
                             child: Row(
@@ -238,7 +238,8 @@ class _HouseState extends State<House> {
                   style: ElevatedButton.styleFrom(
                     elevation: 10,
                     backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0)),
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, '/weeklydiet');
@@ -282,7 +283,8 @@ class _HouseState extends State<House> {
               height: height * 0.16 + width * 0.01,
               width: width * 0.27 + height * 0.01,
               decoration: BoxDecoration(
-                image: const DecorationImage(image: AssetImage("Assets/image/fruits.png")),
+                image: const DecorationImage(
+                    image: AssetImage("Assets/image/fruits.png")),
                 color: const Color(0xFFfff2f0),
                 borderRadius: BorderRadius.circular(50),
               ),
@@ -294,7 +296,8 @@ class _HouseState extends State<House> {
               height: height * 0.16 + width * 0.01,
               width: width * 0.27 + height * 0.01,
               decoration: BoxDecoration(
-                image: const DecorationImage(image: AssetImage("Assets/image/vegetables.png")),
+                image: const DecorationImage(
+                    image: AssetImage("Assets/image/vegetables.png")),
                 color: const Color(0xFFeff6ef),
                 borderRadius: BorderRadius.circular(50),
               ),
@@ -306,7 +309,8 @@ class _HouseState extends State<House> {
               height: height * 0.16 + width * 0.01,
               width: width * 0.27 + height * 0.01,
               decoration: BoxDecoration(
-                image: const DecorationImage(image: AssetImage("Assets/image/Snacks.png")),
+                image: const DecorationImage(
+                    image: AssetImage("Assets/image/Snacks.png")),
                 color: const Color(0xFFfef8ea),
                 borderRadius: BorderRadius.circular(50),
               ),

@@ -13,21 +13,36 @@ class WeeklyDiet extends StatefulWidget {
 
 class _WeeklyDietState extends State<WeeklyDiet> {
   String? bodyType;
-  late Future<List<String>> mondayDiet;
+  //breakfast
+  late Future<List<String>> mondayDietBreakFast;
+  late Future<List<String>> mondayDietLunch;
+  late Future<List<String>> mondayDietSnacks;
+  late Future<List<String>> mondayDietDinner;
 
-  // Method to fetch the user's body type from SharedPreferences
-  Future<void> getBodyType() async {
+  // Method to fetch the Monday breakfast diet recommendations
+  Future<void> getMondayBreakfastDiet() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     setState(() {
       bodyType = pref.getString("BodyType");
     });
-  }
-
-  // Method to fetch the Monday breakfast diet recommendations
-  Future<void> getMondayBreakfastDiet() async {
-    mondayDiet = getFoodRecommendations(
+    mondayDietBreakFast = getFoodRecommendations(
       time: 'breakfast', // Set the time to 'breakfast'
-      bodyType: bodyType ?? "",
+      bodyType: bodyType == null ? "Find Body type to View Food" : "$bodyType",
+      disabilities: [],
+    );
+    mondayDietLunch = getFoodRecommendations(
+      time: 'lunch',
+      bodyType: bodyType == null ? "Find Body type to View Food" : "$bodyType",
+      disabilities: [],
+    );
+    mondayDietSnacks = getFoodRecommendations(
+      time: 'snack',
+      bodyType: bodyType == null ? "Find Body type to View Food" : "$bodyType",
+      disabilities: [],
+    );
+    mondayDietDinner = getFoodRecommendations(
+      time: 'dinner',
+      bodyType: bodyType == null ? "Find Body type to View Food" : "$bodyType",
       disabilities: [],
     );
   }
@@ -35,7 +50,6 @@ class _WeeklyDietState extends State<WeeklyDiet> {
   @override
   void initState() {
     super.initState();
-    getBodyType();
     getMondayBreakfastDiet(); // Fetch the Monday breakfast diet recommendations
   }
 
@@ -43,7 +57,6 @@ class _WeeklyDietState extends State<WeeklyDiet> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -88,16 +101,16 @@ class _WeeklyDietState extends State<WeeklyDiet> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.amber,
+                  Colors.amberAccent,
                   Colors
-                      .amberAccent, // Replace this with your desired gradient color
+                      .yellow, // Replace this with your desired gradient color
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.circular(15),
             ),
-            height: height * 0.3 + width * 0.02,
+            height: height * 0.37 + width * 0.02,
             width: height * 0.45 + width * 0.02,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,36 +139,181 @@ class _WeeklyDietState extends State<WeeklyDiet> {
                 ),
                 // Display the breakfast recommendation
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       width: width * 0.03 + height * 0.01,
                     ),
-                    FutureBuilder<List<String>>(
-                      future: mondayDiet,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasData) {
-                          return Text(
-                            "Breakfast: ${snapshot.data![0]}",
-                            style: TextStyle(
-                              fontSize: height * 0.012 + width * 0.02,
-                              fontWeight: FontWeight.normal,
-                              fontFamily: "Comfortaa",
-                              color: Colors.black45,
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text("Error: ${snapshot.error}");
-                        }
-                        return Text("No data available.");
-                      },
+                    Text(
+                      "Breakfast: ",
+                      style: TextStyle(
+                        fontSize: height * 0.012 + width * 0.02,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: "Comfortaa",
+                        color: Colors.black,
+                      ),
+                    ),
+                    Flexible(
+                      child: FutureBuilder<List<String>>(
+                        future: mondayDietBreakFast,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasData) {
+                            return Text(
+                              "${snapshot.data![0]}",
+                              style: TextStyle(
+                                fontSize: height * 0.012 + width * 0.02,
+                                fontWeight: FontWeight.normal,
+                                fontFamily: "Comfortaa",
+                                color: Colors.black45,
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text("Error: ${snapshot.error}");
+                          }
+                          return Text("No data available.");
+                        },
+                      ),
                     ),
                   ],
                 ),
-
-                // ... Continue displaying other meal recommendations ...
+                SizedBox(
+                  height: height * 0.03 + width * 0.01,
+                ),
+                // Display the breakfast recommendation
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: width * 0.03 + height * 0.01,
+                    ),
+                    Text(
+                      "Lunch: ",
+                      style: TextStyle(
+                        fontSize: height * 0.012 + width * 0.02,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: "Comfortaa",
+                        color: Colors.black,
+                      ),
+                    ),
+                    Flexible(
+                      child: FutureBuilder<List<String>>(
+                        future: mondayDietLunch,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasData) {
+                            return Text(
+                              "${snapshot.data![0]}",
+                              style: TextStyle(
+                                fontSize: height * 0.012 + width * 0.02,
+                                fontWeight: FontWeight.normal,
+                                fontFamily: "Comfortaa",
+                                color: Colors.black45,
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text("Error: ${snapshot.error}");
+                          }
+                          return Text("No data available.");
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.03 + width * 0.01,
+                ),
+                // Display the breakfast recommendation
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: width * 0.03 + height * 0.01,
+                    ),
+                    Text(
+                      "Snacks: ",
+                      style: TextStyle(
+                        fontSize: height * 0.012 + width * 0.02,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: "Comfortaa",
+                        color: Colors.black,
+                      ),
+                    ),
+                    Flexible(
+                      child: FutureBuilder<List<String>>(
+                        future: mondayDietSnacks,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasData) {
+                            return Text(
+                              "${snapshot.data![0]}",
+                              style: TextStyle(
+                                fontSize: height * 0.012 + width * 0.02,
+                                fontWeight: FontWeight.normal,
+                                fontFamily: "Comfortaa",
+                                color: Colors.black45,
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text("Error: ${snapshot.error}");
+                          }
+                          return Text("No data available.");
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.03 + width * 0.01,
+                ),
+                // Display the breakfast recommendation
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: width * 0.03 + height * 0.01,
+                    ),
+                    Text(
+                      "Dinner: ",
+                      style: TextStyle(
+                        fontSize: height * 0.012 + width * 0.02,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: "Comfortaa",
+                        color: Colors.black,
+                      ),
+                    ),
+                    Flexible(
+                      child: FutureBuilder<List<String>>(
+                        future: mondayDietDinner,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasData) {
+                            return Text(
+                              "${snapshot.data![0]}",
+                              style: TextStyle(
+                                fontSize: height * 0.012 + width * 0.02,
+                                fontWeight: FontWeight.normal,
+                                fontFamily: "Comfortaa",
+                                color: Colors.black45,
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text("Error: ${snapshot.error}");
+                          }
+                          return Text("No data available.");
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
