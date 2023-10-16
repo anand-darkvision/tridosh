@@ -81,6 +81,8 @@ dependencies:
   open_file: ^3.3.2
   #intl
   intl: ^0.18.1
+  #csv
+  csv: ^5.0.2
   syncfusion_flutter_pdfviewer: ^20.4.54
 
 dev_dependencies:
@@ -116,16 +118,10 @@ flutter:
     - Assets/image/logout.png
     - Assets/image/report.png
     - Assets/image/recall.png
-    - Assets/image/Icecream.png
-    - Assets/image/Monday.gif
-    - Assets/image/Saturday.gif
-    - Assets/image/Tuesday.gif
-    - Assets/image/Wednesday.gif
-    - Assets/image/Thursday.gif
-    - Assets/image/Sunday.gif
-    - Assets/image/Friday.gif
     - Assets/image/setting.png
     - Assets/image/404.gif
+    - Assets/Data/finalfoodis.csv
+    - Assets/image/Icecream.png
 
     # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

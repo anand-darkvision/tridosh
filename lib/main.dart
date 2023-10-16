@@ -1,5 +1,5 @@
-import 'dart:async';
 import 'dart:io';
+
 import 'package:dietrecall/Screens/NavBarContent/getReport.dart';
 import 'package:dietrecall/Screens/NavBarContent/preference.dart';
 import 'package:dietrecall/Screens/NavBarContent/recaller.dart';
@@ -10,13 +10,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'Provider/google_sign_in.dart';
 import 'Screens/Homepage.dart';
 import 'Screens/IntroPage.dart';
 import 'Screens/Register.dart';
 import 'Screens/SplashScreen.dart';
 import 'Screens/login.dart';
-import 'package:workmanager/workmanager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
