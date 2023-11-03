@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,8 +16,9 @@ class FoodPreference extends StatefulWidget {
 class _FoodPreferenceState extends State<FoodPreference> {
   //firebase reference
   User? user = FirebaseAuth.instance.currentUser!;
-  late DatabaseReference _ref;
-  final firebaseInstance = FirebaseDatabase.instance;
+  late CollectionReference _ref;
+  final firestoreInstance = FirebaseFirestore.instance;
+
   //drop down menu items
   List<DropdownMenuItem<String>> get locationItems {
     List<DropdownMenuItem<String>> menuItems = [
@@ -1384,20 +1386,7 @@ class _FoodPreferenceState extends State<FoodPreference> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0)),
                       ),
-                      onPressed: () {
-                        _ref = firebaseInstance
-                            .ref()
-                            .child('${user!.uid}/preference');
-                        _ref.set({
-                          "Location": locationList[_location],
-                          "Food Item": foodTypeList[_foodType],
-                          "Food Taste": foodTasteList[_foodTaste],
-                          "Smoke": yesOrNo[_youSmoke],
-                          "Alcohol": yesOrNo[_youAlcoholic],
-                          "Comorbities": comorBities[_comorb],
-                          "Allergies": allergies[_allergies],
-                        }).asStream();
-                      },
+                      onPressed: () {},
                       child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -242,7 +242,7 @@ class _HouseState extends State<House> {
                         borderRadius: BorderRadius.circular(15.0)),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/weeklydiet');
+                    Navigator.pushNamed(context, '/maindiet');
                   },
                   child: Center(
                     child: Row(

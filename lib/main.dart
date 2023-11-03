@@ -1,10 +1,11 @@
 import 'dart:io';
 
+import 'package:dietrecall/Screens/NavBarContent/Diet/mainDiet.dart';
+import 'package:dietrecall/Screens/NavBarContent/Diet/mondayDiet.dart';
 import 'package:dietrecall/Screens/NavBarContent/getReport.dart';
 import 'package:dietrecall/Screens/NavBarContent/preference.dart';
 import 'package:dietrecall/Screens/NavBarContent/recaller.dart';
 import 'package:dietrecall/Screens/NutritionValue.dart';
-import 'package:dietrecall/Screens/weeklyDiet.dart';
 import 'package:dietrecall/Service/notifi_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'Provider/google_sign_in.dart';
 import 'Screens/Homepage.dart';
 import 'Screens/IntroPage.dart';
+import 'Screens/NavBarContent/Diet/tuesdayDiet.dart';
 import 'Screens/Register.dart';
 import 'Screens/SplashScreen.dart';
 import 'Screens/login.dart';
@@ -57,9 +59,11 @@ class _MainRouteState extends State<MainRoute> {
                 '/homepage': (context) => const HomePage(),
                 '/report': (context) => const ReportPage(),
                 '/recaller': (context) => const Recaller(),
-                '/weeklydiet': (context) => const WeeklyDiet(),
                 '/nutrition': (context) => NutritionValue(),
                 '/preference': (context) => const FoodPreference(),
+                '/weeklydiet': (context) => const WeeklyDiet(),
+                '/maindiet': (context) => const MainDiet(),
+                '/tuesdaydiet': (context) => const TuesdayDiet(),
               },
               title: 'DietRecall',
               debugShowCheckedModeBanner: false,
@@ -81,9 +85,11 @@ class _MainRouteState extends State<MainRoute> {
                 '/homepage': (context) => const HomePage(),
                 '/report': (context) => const ReportPage(),
                 '/recaller': (context) => const Recaller(),
-                '/weeklydiet': (context) => const WeeklyDiet(),
                 '/nutrition': (context) => NutritionValue(),
                 '/preference': (context) => const FoodPreference(),
+                '/weeklydiet': (context) => const WeeklyDiet(),
+                '/maindiet': (context) => const MainDiet(),
+                '/tuesdaydiet': (context) => const TuesdayDiet(),
               },
               title: 'DietRecall',
               debugShowCheckedModeBanner: false,
