@@ -159,7 +159,7 @@ class _HouseState extends State<House> {
                                 Icon(
                                   Icons.arrow_right_rounded,
                                   color: Colors.white,
-                                  size: height * 0.020 + width * 0.01,
+                                  size: height * 0.019 + width * 0.01,
                                 )
                               ],
                             ),
@@ -255,13 +255,13 @@ class _HouseState extends State<House> {
                           'Read Now',
                           style: TextStyle(
                             color: const Color(0xFF9e9ac6),
-                            fontSize: height * 0.013 + width * 0.01,
+                            fontSize: height * 0.012 + width * 0.01,
                           ),
                         ),
                         Icon(
                           Icons.arrow_right_rounded,
                           color: const Color(0xFF9e9ac6),
-                          size: height * 0.020 + width * 0.01,
+                          size: height * 0.018 + width * 0.01,
                         )
                       ],
                     ),

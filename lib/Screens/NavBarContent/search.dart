@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -33,7 +34,8 @@ class _SearchState extends State<Search> {
   List<FoodItem> _foodItems = [];
 
   Future<void> searchFood(String query) async {
-    final String url = 'https://trackapi.nutritionix.com/v2/search/instant?query=$query';
+    final String url =
+        'https://trackapi.nutritionix.com/v2/search/instant?query=$query&detailed=true';
     final Map<String, String> headers = {
       'Content-Type': 'application/json',
       'x-app-id': 'e975eb9b',
@@ -50,30 +52,16 @@ class _SearchState extends State<Search> {
 
         for (final hit in common) {
           final String name = hit['food_name'];
-          final String brandName = hit['brand_name'] ?? ''; // Handle null brand_name
+          final String brandName =
+              hit['brand_name'] ?? ''; // Handle null brand_name
           final double calories = hit['nf_calories']?.toDouble() ?? 0.0;
           final double totalFat = hit['nf_total_fat']?.toDouble() ?? 0.0;
 
           final FoodItem foodItem = FoodItem(
             name: name,
             brandName: brandName,
-            itemId: '', // You can add the item ID if it's available in the response.
-            calories: calories,
-            totalFat: totalFat,
-          );
-          foodItems.add(foodItem);
-        }
-
-        for (final hit in branded) {
-          final String name = hit['food_name'];
-          final String brandName = hit['brand_name'] ?? ''; // Handle null brand_name
-          final double calories = hit['nf_calories']?.toDouble() ?? 0.0;
-          final double totalFat = hit['nf_total_fat']?.toDouble() ?? 0.0;
-
-          final FoodItem foodItem = FoodItem(
-            name: name,
-            brandName: brandName,
-            itemId: '', // You can add the item ID if it's available in the response.
+            itemId:
+                '', // You can add the item ID if it's available in the response.
             calories: calories,
             totalFat: totalFat,
           );
@@ -204,7 +192,8 @@ class _SearchState extends State<Search> {
                 itemBuilder: (BuildContext context, int index) {
                   final foodItem = _foodItems[index];
                   return Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(25)),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(25)),
                     child: Card(
                       color: const Color.fromARGB(255, 177, 222, 169),
                       elevation: 2.0,
@@ -225,7 +214,8 @@ class _SearchState extends State<Search> {
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(height: 10.0), // Adjust height as needed
+                            const SizedBox(
+                                height: 10.0), // Adjust height as needed
                             Text(
                               'Brand: ${foodItem.brandName}',
                               style: const TextStyle(
@@ -234,7 +224,8 @@ class _SearchState extends State<Search> {
                                 fontFamily: "Comfortaa",
                               ),
                             ),
-                            const SizedBox(height: 10.0), // Adjust height as needed
+                            const SizedBox(
+                                height: 10.0), // Adjust height as needed
                             Text(
                               'Calories: ${foodItem.calories}',
                               style: const TextStyle(
@@ -243,7 +234,8 @@ class _SearchState extends State<Search> {
                                 fontFamily: "Comfortaa",
                               ),
                             ),
-                            const SizedBox(height: 10.0), // Adjust height as needed
+                            const SizedBox(
+                                height: 10.0), // Adjust height as needed
                             Text(
                               'Total Fat: ${foodItem.totalFat}',
                               style: const TextStyle(
@@ -252,7 +244,8 @@ class _SearchState extends State<Search> {
                                 fontFamily: "Comfortaa",
                               ),
                             ),
-                            const SizedBox(height: 10.0), // Adjust height as needed
+                            const SizedBox(
+                                height: 10.0), // Adjust height as needed
                           ],
                         ),
                       ),

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,8 +15,7 @@ class FoodPreference extends StatefulWidget {
 class _FoodPreferenceState extends State<FoodPreference> {
   //firebase reference
   User? user = FirebaseAuth.instance.currentUser!;
-  late CollectionReference _ref;
-  final firestoreInstance = FirebaseFirestore.instance;
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   //drop down menu items
   List<DropdownMenuItem<String>> get locationItems {
@@ -213,7 +211,7 @@ class _FoodPreferenceState extends State<FoodPreference> {
             ),
           )),
       const DropdownMenuItem(
-          value: "Hyper Tension",
+          value: "Hypertension",
           child: Text(
             "Hyper Tension",
             style: TextStyle(
@@ -674,11 +672,13 @@ class _FoodPreferenceState extends State<FoodPreference> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0)),
                       ),
-                      onPressed: () {
-                        _ref = firebaseInstance
-                            .ref()
-                            .child('${user!.uid}/preference');
-                        _ref.set({
+                      onPressed: () async {
+                        await firebaseFirestore
+                            .collection('users')
+                            .doc(user!.email)
+                            .collection('preference')
+                            .doc('pref')
+                            .set({
                           "Location": defaultLocation,
                           "Food Item": defaultFoodItem,
                           "Food Taste": defaultFoodtaste,
@@ -686,7 +686,8 @@ class _FoodPreferenceState extends State<FoodPreference> {
                           "Alcohol": defaultAlcohol,
                           "Comorbities": defaultComorb,
                           "Allergies": defaultAllergy,
-                        }).asStream();
+                        });
+                        Navigator.pushNamed(context, '/homepage');
                       },
                       child: Center(
                         child: Row(
@@ -746,7 +747,7 @@ class _FoodPreferenceState extends State<FoodPreference> {
       List comorBities = <String>[
         "None",
         "High-BP",
-        "HyperTension",
+        "Hypertension",
         "Diabetes",
         "Cardio",
       ];
@@ -852,7 +853,7 @@ class _FoodPreferenceState extends State<FoodPreference> {
                     ),
                   ),
                   SizedBox(
-                    width: width * 0.15 + height * 0.01,
+                    width: width * 0.1 + height * 0.01,
                   ),
                   CupertinoButton(
                     color: Colors.grey,
@@ -917,7 +918,7 @@ class _FoodPreferenceState extends State<FoodPreference> {
                     ),
                   ),
                   SizedBox(
-                    width: width * 0.12 + height * 0.01,
+                    width: width * 0.07 + height * 0.01,
                   ),
                   CupertinoButton(
                     color: Colors.grey,
@@ -1221,7 +1222,7 @@ class _FoodPreferenceState extends State<FoodPreference> {
                     onPressed: () => showCupertinoModalPopup(
                       context: context,
                       builder: (_) => SizedBox(
-                        width: double.infinity,
+                        width: width * 0.01,
                         height: height * 0.3 + width * 0.01,
                         child: CupertinoPicker(
                           backgroundColor: Colors.white,
@@ -1252,7 +1253,7 @@ class _FoodPreferenceState extends State<FoodPreference> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'comfortaa',
-                                fontSize: width * 0.03 + height * 0.01,
+                                fontSize: width * 0.005 + height * 0.01,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -1386,7 +1387,23 @@ class _FoodPreferenceState extends State<FoodPreference> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0)),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        await firebaseFirestore
+                            .collection('users')
+                            .doc(user!.email)
+                            .collection('preference')
+                            .doc('pref')
+                            .set({
+                          "Location": defaultLocation,
+                          "Food Item": defaultFoodItem,
+                          "Food Taste": defaultFoodtaste,
+                          "Smoke": defaultSmoke,
+                          "Alcohol": defaultAlcohol,
+                          "Comorbities": defaultComorb,
+                          "Allergies": defaultAllergy,
+                        });
+                        Navigator.pushNamed(context, '/homepage');
+                      },
                       child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
