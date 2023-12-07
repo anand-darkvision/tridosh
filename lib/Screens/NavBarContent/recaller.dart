@@ -119,13 +119,13 @@ class _RecallerState extends State<Recaller> {
                                   'BreakFast',
                                   style: TextStyle(
                                     color: Colors.grey[700],
-                                    fontSize: height * 0.013 + width * 0.01,
+                                    fontSize: height * 0.012 + width * 0.01,
                                   ),
                                 ),
                                 Icon(
                                   Icons.arrow_right_rounded,
                                   color: Colors.grey[700],
-                                  size: height * 0.020 + width * 0.01,
+                                  size: height * 0.012 + width * 0.01,
                                 )
                               ],
                             ),

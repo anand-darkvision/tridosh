@@ -88,7 +88,6 @@ Future<List<String>> getFoodRecommendations(
         foods.addAll([
           'drumstick leaves spinach',
           'radish leaves spinach',
-          // other items
         ]);
       }
       for (var item in data) {

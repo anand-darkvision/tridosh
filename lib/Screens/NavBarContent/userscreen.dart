@@ -245,7 +245,21 @@ class _UserScreenState extends State<UserScreen> {
               height: height * 0.013 + width * 0.02,
             ),
             GestureDetector(
-              onTap: () {
+              onTap: () async {
+                final SharedPreferences pref =
+                    await SharedPreferences.getInstance();
+                pref.remove("mondayBreakfast");
+                pref.remove("mondayLunch");
+                pref.remove("mondaySnacks");
+                pref.remove("mondayDinner");
+                pref.remove("tuesdayBreakfast");
+                pref.remove("tuesdayLunch");
+                pref.remove("tuesdaySnacks");
+                pref.remove("tuesdayDinner");
+                pref.remove("dietPlanKey");
+                pref.remove("lastPlanDateTuesday");
+                pref.remove("lastPlanDateMonday");
+                pref.remove("BodyType");
                 final provider =
                     Provider.of<GoogleSignInProvider>(context, listen: false);
                 provider.logOut(context);

@@ -8,17 +8,19 @@ import 'package:http/http.dart' as http;
 
 class FoodItem {
   final String name;
-  final String brandName;
+  final String servingQty;
   final String itemId;
   final double calories;
   final double totalFat;
+  final String thumbnailUrl;
 
   FoodItem({
     required this.name,
-    required this.brandName,
+    required this.servingQty,
     required this.itemId,
     required this.calories,
     required this.totalFat,
+    required this.thumbnailUrl,
   });
 }
 
@@ -46,27 +48,23 @@ class _SearchState extends State<Search> {
       final response = await http.get(Uri.parse(url), headers: headers);
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
-        final List<dynamic> common = data['common'] ?? [];
-        final List<dynamic> branded = data['branded'] ?? [];
-        final List<FoodItem> foodItems = [];
 
-        for (final hit in common) {
-          final String name = hit['food_name'];
-          final String brandName =
-              hit['brand_name'] ?? ''; // Handle null brand_name
-          final double calories = hit['nf_calories']?.toDouble() ?? 0.0;
-          final double totalFat = hit['nf_total_fat']?.toDouble() ?? 0.0;
+        final commonFoods = data['common'] as List<dynamic>;
 
-          final FoodItem foodItem = FoodItem(
-            name: name,
-            brandName: brandName,
-            itemId:
-                '', // You can add the item ID if it's available in the response.
-            calories: calories,
-            totalFat: totalFat,
+        final List<FoodItem> foodItems = commonFoods.map((food) {
+          return FoodItem(
+            name: food['food_name'],
+            servingQty: food['serving_unit'],
+            itemId: food['tag_id'].toString(),
+            calories: food['full_nutrients']
+                .firstWhere((nutrient) => nutrient['attr_id'] == 208)['value']
+                .toDouble(),
+            totalFat: food['full_nutrients']
+                .firstWhere((nutrient) => nutrient['attr_id'] == 204)['value']
+                .toDouble(),
+            thumbnailUrl: food['photo']['thumb'],
           );
-          foodItems.add(foodItem);
-        }
+        }).toList();
 
         setState(() {
           _foodItems = foodItems;
@@ -198,15 +196,15 @@ class _SearchState extends State<Search> {
                       color: const Color.fromARGB(255, 177, 222, 169),
                       elevation: 2.0,
                       margin: const EdgeInsets.symmetric(
-                        vertical: 15.0, // Adjust vertical margin as needed
-                        horizontal: 20.0, // Adjust horizontal margin as needed
+                        vertical: 20.0,
+                        horizontal: 20.0,
                       ),
                       child: ListTile(
                         title: Text(
                           foodItem.name,
                           style: const TextStyle(
                             color: Colors.black,
-                            fontSize: 20.0, // Use a specific font size
+                            fontSize: 20.0,
                             fontFamily: "Comfortaa",
                             fontWeight: FontWeight.bold,
                           ),
@@ -214,39 +212,41 @@ class _SearchState extends State<Search> {
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(
-                                height: 10.0), // Adjust height as needed
+                            const SizedBox(height: 10.0),
                             Text(
-                              'Brand: ${foodItem.brandName}',
+                              'Brand: ${foodItem.servingQty}',
                               style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 18.0, // Use a specific font size
+                                fontSize: 18.0,
                                 fontFamily: "Comfortaa",
                               ),
                             ),
-                            const SizedBox(
-                                height: 10.0), // Adjust height as needed
+                            const SizedBox(height: 10.0),
                             Text(
                               'Calories: ${foodItem.calories}',
                               style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 18.0, // Use a specific font size
+                                fontSize: 18.0,
                                 fontFamily: "Comfortaa",
                               ),
                             ),
-                            const SizedBox(
-                                height: 10.0), // Adjust height as needed
+                            const SizedBox(height: 10.0),
                             Text(
                               'Total Fat: ${foodItem.totalFat}',
                               style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 18.0, // Use a specific font size
+                                fontSize: 18.0,
                                 fontFamily: "Comfortaa",
                               ),
                             ),
-                            const SizedBox(
-                                height: 10.0), // Adjust height as needed
+                            const SizedBox(height: 10.0),
                           ],
+                        ),
+                        leading: Image.network(
+                          foodItem.thumbnailUrl,
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),

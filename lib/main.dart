@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:dietrecall/Screens/NavBarContent/Diet/mainDiet.dart';
 import 'package:dietrecall/Screens/NavBarContent/Diet/mondayDiet.dart';
+import 'package:dietrecall/Screens/NavBarContent/Diet/thursday.dart';
+import 'package:dietrecall/Screens/NavBarContent/Diet/wednesdayDiet.dart';
 import 'package:dietrecall/Screens/NavBarContent/getReport.dart';
 import 'package:dietrecall/Screens/NavBarContent/preference.dart';
 import 'package:dietrecall/Screens/NavBarContent/recaller.dart';
@@ -15,6 +17,9 @@ import 'package:provider/provider.dart';
 import 'Provider/google_sign_in.dart';
 import 'Screens/Homepage.dart';
 import 'Screens/IntroPage.dart';
+import 'Screens/NavBarContent/Diet/friday.dart';
+import 'Screens/NavBarContent/Diet/saturday.dart';
+import 'Screens/NavBarContent/Diet/sunday.dart';
 import 'Screens/NavBarContent/Diet/tuesdayDiet.dart';
 import 'Screens/Register.dart';
 import 'Screens/SplashScreen.dart';
@@ -64,6 +69,11 @@ class _MainRouteState extends State<MainRoute> {
                 '/weeklydiet': (context) => const WeeklyDiet(),
                 '/maindiet': (context) => const MainDiet(),
                 '/tuesdaydiet': (context) => const TuesdayDiet(),
+                '/wednesdaydiet': (context) => const WednesdayDiet(),
+                '/thursdaydiet': (context) => const ThursdayDiet(),
+                '/fridaydiet': (context) => const FridayDiet(),
+                '/saturdaydiet': (context) => const SaturdayDiet(),
+                '/sundaydiet': (context) => const SundayDiet(),
               },
               title: 'DietRecall',
               debugShowCheckedModeBanner: false,
@@ -90,6 +100,11 @@ class _MainRouteState extends State<MainRoute> {
                 '/weeklydiet': (context) => const WeeklyDiet(),
                 '/maindiet': (context) => const MainDiet(),
                 '/tuesdaydiet': (context) => const TuesdayDiet(),
+                '/wednesdaydiet': (context) => const WednesdayDiet(),
+                '/thursdaydiet': (context) => const ThursdayDiet(),
+                '/fridaydiet': (context) => const FridayDiet(),
+                '/saturdaydiet': (context) => const SaturdayDiet(),
+                '/sundaydiet': (context) => const SundayDiet(),
               },
               title: 'DietRecall',
               debugShowCheckedModeBanner: false,

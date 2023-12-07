@@ -163,7 +163,7 @@ class _MainDietState extends State<MainDiet> {
                               borderRadius: BorderRadius.circular(15.0)),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/maindiet');
+                          Navigator.pushNamed(context, '/wednesdaydiet');
                         },
                         child: Center(
                           child: Row(
@@ -176,13 +176,13 @@ class _MainDietState extends State<MainDiet> {
                                 'Wednesday',
                                 style: TextStyle(
                                   color: const Color(0xFF9e9ac6),
-                                  fontSize: height * 0.013 + width * 0.01,
+                                  fontSize: height * 0.011 + width * 0.01,
                                 ),
                               ),
                               Icon(
                                 Icons.arrow_right_rounded,
                                 color: const Color(0xFF9e9ac6),
-                                size: height * 0.020 + width * 0.01,
+                                size: height * 0.015 + width * 0.01,
                               )
                             ],
                           ),
@@ -200,7 +200,7 @@ class _MainDietState extends State<MainDiet> {
                               borderRadius: BorderRadius.circular(15.0)),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/maindiet');
+                          Navigator.pushNamed(context, '/thursdaydiet');
                         },
                         child: Center(
                           child: Row(
@@ -213,13 +213,13 @@ class _MainDietState extends State<MainDiet> {
                                 'Thursday',
                                 style: TextStyle(
                                   color: const Color(0xFF9e9ac6),
-                                  fontSize: height * 0.013 + width * 0.01,
+                                  fontSize: height * 0.012 + width * 0.01,
                                 ),
                               ),
                               Icon(
                                 Icons.arrow_right_rounded,
                                 color: const Color(0xFF9e9ac6),
-                                size: height * 0.020 + width * 0.01,
+                                size: height * 0.015 + width * 0.01,
                               )
                             ],
                           ),
@@ -245,7 +245,7 @@ class _MainDietState extends State<MainDiet> {
                               borderRadius: BorderRadius.circular(15.0)),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/maindiet');
+                          Navigator.pushNamed(context, '/fridaydiet');
                         },
                         child: Center(
                           child: Row(
@@ -282,7 +282,7 @@ class _MainDietState extends State<MainDiet> {
                               borderRadius: BorderRadius.circular(15.0)),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/maindiet');
+                          Navigator.pushNamed(context, '/saturdaydiet');
                         },
                         child: Center(
                           child: Row(
@@ -301,7 +301,7 @@ class _MainDietState extends State<MainDiet> {
                               Icon(
                                 Icons.arrow_right_rounded,
                                 color: const Color(0xFF9e9ac6),
-                                size: height * 0.020 + width * 0.01,
+                                size: height * 0.015 + width * 0.01,
                               )
                             ],
                           ),
@@ -327,7 +327,7 @@ class _MainDietState extends State<MainDiet> {
                               borderRadius: BorderRadius.circular(15.0)),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/maindiet');
+                          Navigator.pushNamed(context, '/sundaydiet');
                         },
                         child: Center(
                           child: Row(
@@ -355,6 +355,21 @@ class _MainDietState extends State<MainDiet> {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: height * 0.03 + width * 0.01,
+                ),
+                Center(
+                  child: Container(
+                    width: width * 0.6 + height * 0.1,
+                    height: height * 0.25 + width * 0.1,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: DecorationImage(
+                        image: AssetImage('Assets/image/eat.png'),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           )
@@ -480,7 +495,7 @@ class _MainDietState extends State<MainDiet> {
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () {
-                        Navigator.pushNamed(context, '/maindiet');
+                        Navigator.pushNamed(context, '/wednesdaydiet');
                       },
                       child: Center(
                         child: Row(
@@ -635,6 +650,19 @@ class _MainDietState extends State<MainDiet> {
                     ),
                   ],
                 ),
+                Center(
+                  child: Container(
+                    width: width * 0.5 + height * 0.1,
+                    height: height * 0.5 + width * 0.1,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      border: Border.all(color: Colors.black),
+                      image: DecorationImage(
+                        image: AssetImage('Assets/image/eat.png'),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           );

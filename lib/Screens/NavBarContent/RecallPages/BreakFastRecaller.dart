@@ -19,6 +19,7 @@ class _BreakFastRecallerState extends State<BreakFastRecaller> {
   @override
   Widget build(BuildContext context) {
     final ref = fb.ref().child('${user!.uid}/breakfast');
+
     return FirebaseAnimatedList(
         query: ref,
         itemBuilder: (context, snapshot, animation, index) {
@@ -39,7 +40,8 @@ class _BreakFastRecallerState extends State<BreakFastRecaller> {
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [
-                    Color(0xFF91C788), // Replace this with your desired gradient colors
+                    Color(
+                        0xFF91C788), // Replace this with your desired gradient colors
                     Color(0xFF5A9653),
                   ],
                   begin: Alignment.topLeft,
@@ -50,7 +52,9 @@ class _BreakFastRecallerState extends State<BreakFastRecaller> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: width * 0.01 + height * 0.01), // Adjust the spacing as needed
+                  SizedBox(
+                      height: width * 0.01 +
+                          height * 0.01), // Adjust the spacing as needed
                   Row(
                     children: [
                       SizedBox(width: width * 0.01 + height * 0.01),
@@ -63,7 +67,7 @@ class _BreakFastRecallerState extends State<BreakFastRecaller> {
                         ),
                       ),
                       Text(
-                        l[1],
+                        l[2],
                         style: TextStyle(
                           color: Colors.grey[200],
                           fontFamily: "signikasemibold",
@@ -85,7 +89,7 @@ class _BreakFastRecallerState extends State<BreakFastRecaller> {
                         ),
                       ),
                       Text(
-                        l[0],
+                        l[1],
                         style: TextStyle(
                           color: Colors.grey[200],
                           fontFamily: "signikasemibold",

@@ -58,7 +58,7 @@ class _DinnerRecallerState extends State<DinnerRecaller> {
                             ),
                           ),
                           Text(
-                            l[1],
+                            l[2],
                             style: TextStyle(
                               color: Colors.grey[200],
                               fontFamily: "signikasemibold",
@@ -84,7 +84,7 @@ class _DinnerRecallerState extends State<DinnerRecaller> {
                             ),
                           ),
                           Text(
-                            l[0],
+                            l[1],
                             style: TextStyle(
                               color: Colors.grey[200],
                               fontFamily: "signikasemibold",

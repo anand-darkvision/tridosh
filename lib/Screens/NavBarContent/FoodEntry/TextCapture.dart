@@ -1,10 +1,13 @@
-import 'dart:math';
+import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class TextCapture extends StatefulWidget {
   const TextCapture({Key? key}) : super(key: key);
@@ -14,17 +17,17 @@ class TextCapture extends StatefulWidget {
 }
 
 class _TextCaptureState extends State<TextCapture> {
-  //controllers
   final TextEditingController _foodName = TextEditingController();
   final TextEditingController _foodCount = TextEditingController();
-  //firebase reference
   User? user = FirebaseAuth.instance.currentUser!;
   late DatabaseReference _ref;
   final firebaseInstance = FirebaseDatabase.instance;
-  //radio values
   bool value1 = false;
   double val1 = -1.0;
-  //flushbar
+
+  var calories = 0.0;
+  var totalFat = 0.0;
+
   void showFlushBar(BuildContext context) {
     Flushbar(
       flushbarPosition: FlushbarPosition.TOP,
@@ -48,12 +51,49 @@ class _TextCaptureState extends State<TextCapture> {
     ).show(context);
   }
 
+  Future<void> fetchFoodInfo(String query) async {
+    final String url =
+        'https://trackapi.nutritionix.com/v2/search/instant?query=$query&detailed=true';
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'x-app-id': 'e975eb9b',
+      'x-app-key': '4a2e8dd857e4dce2a9873762e19cf980',
+    };
+
+    try {
+      final response = await http.get(Uri.parse(url), headers: headers);
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+
+        final commonFoods = data['common'] as List<dynamic>;
+
+        if (commonFoods.isNotEmpty) {
+          final food = commonFoods.first;
+          setState(() {
+            calories = food['full_nutrients']
+                .firstWhere((nutrient) => nutrient['attr_id'] == 208)['value']
+                .toDouble();
+            totalFat = food['full_nutrients']
+                .firstWhere((nutrient) => nutrient['attr_id'] == 204)['value']
+                .toDouble();
+          });
+
+          print('Calories: $calories, Total Fat: $totalFat');
+        }
+      } else {
+        throw Exception('Failed to fetch data');
+      }
+    } catch (e) {
+      // Handle exceptions here
+      print('Error: $e');
+      // Show an error message or handle the error accordingly
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    //Random
     var rng = Random();
     var k = rng.nextInt(10000);
-    //screen height and width
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
 
@@ -97,7 +137,8 @@ class _TextCaptureState extends State<TextCapture> {
                       ),
                     ),
                     Radio(
-                      fillColor: MaterialStateColor.resolveWith((states) => Colors.green),
+                      fillColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.green),
                       value: 0.0,
                       groupValue: val1,
                       onChanged: (value1) {
@@ -120,7 +161,8 @@ class _TextCaptureState extends State<TextCapture> {
                       ),
                     ),
                     Radio(
-                      fillColor: MaterialStateColor.resolveWith((states) => Colors.green),
+                      fillColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.green),
                       value: 1.0,
                       groupValue: val1,
                       onChanged: (value1) {
@@ -153,7 +195,8 @@ class _TextCaptureState extends State<TextCapture> {
                       ),
                     ),
                     Radio(
-                      fillColor: MaterialStateColor.resolveWith((states) => Colors.green),
+                      fillColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.green),
                       value: 2.0,
                       groupValue: val1,
                       onChanged: (value1) {
@@ -179,7 +222,8 @@ class _TextCaptureState extends State<TextCapture> {
                       ),
                     ),
                     Radio(
-                      fillColor: MaterialStateColor.resolveWith((states) => Colors.green),
+                      fillColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.green),
                       value: 3.0,
                       groupValue: val1,
                       onChanged: (value1) {
@@ -285,20 +329,29 @@ class _TextCaptureState extends State<TextCapture> {
               height: height * 0.01 + width * 0.06,
             ),
             SizedBox(
-              height: height * 0.03 + width * 0.1,
-              width: height * 0.1 + width * 0.3,
+              height: height * 0.07 + width * 0.01,
+              width: width * 0.3 + height * 0.25,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   elevation: 10,
                   backgroundColor: const Color.fromARGB(255, 145, 199, 136),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0)),
                 ),
-                onPressed: () {
+                onPressed: () async {
+                  final query = _foodName.text;
+                  await fetchFoodInfo(query);
+
+                  // Rest of the code for saving data in the database
                   if (val1 == 0.0) {
-                    _ref = firebaseInstance.ref().child('${user!.uid}/breakfast/$k');
+                    _ref = firebaseInstance
+                        .ref()
+                        .child('${user!.uid}/breakfast/$k');
                     _ref.set({
                       "name": _foodName.text,
                       "count": _foodCount.text,
+                      "calories": calories, // Provide the actual value
+                      "totalFat": totalFat, // Provide the actual value
                     }).asStream();
                     _foodName.clear();
                     _foodCount.clear();
@@ -306,32 +359,41 @@ class _TextCaptureState extends State<TextCapture> {
                       val1 = -1.0;
                     });
                   } else if (val1 == 1.0) {
-                    _ref = firebaseInstance.ref().child('${user!.uid}/lunch/$k');
+                    _ref =
+                        firebaseInstance.ref().child('${user!.uid}/lunch/$k');
                     _ref.set({
                       "name": _foodName.text,
                       "count": _foodCount.text,
+                      "calories": calories,
+                      "totalFat": totalFat,
                     }).asStream();
                     _foodName.clear();
                     _foodCount.clear();
                     setState(() {
                       val1 = -1.0;
                     });
-                  } else if (val1 == 2.0) {
-                    _ref = firebaseInstance.ref().child('${user!.uid}/snacks/$k');
+                  } else if (val1 == 2) {
+                    _ref =
+                        firebaseInstance.ref().child('${user!.uid}/snacks/$k');
                     _ref.set({
                       "name": _foodName.text,
                       "count": _foodCount.text,
+                      "calories": calories,
+                      "totalFat": totalFat,
                     }).asStream();
                     _foodName.clear();
                     _foodCount.clear();
                     setState(() {
                       val1 = -1.0;
                     });
-                  } else if (val1 == 3.0) {
-                    _ref = firebaseInstance.ref().child('${user!.uid}/dinner/$k');
+                  } else if (val1 == 3) {
+                    _ref =
+                        firebaseInstance.ref().child('${user!.uid}/dinner/$k');
                     _ref.set({
                       "name": _foodName.text,
                       "count": _foodCount.text,
+                      "calories": calories,
+                      "totalFat": totalFat,
                     }).asStream();
                     _foodName.clear();
                     _foodCount.clear();
@@ -500,38 +562,76 @@ class _TextCaptureState extends State<TextCapture> {
               height: height * 0.03 + width * 0.1,
               width: height * 0.1 + width * 0.3,
               child: Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 145, 199, 136), // Button background color
-                  borderRadius: BorderRadius.circular(15),
-                ),
+                // (unchanged code)
                 child: CupertinoButton(
-                  onPressed: () {
-                    String meal = '';
+                  onPressed: () async {
+                    final query = _foodName.text;
+                    await fetchFoodInfo(query);
+
+                    // Rest of the code for saving data in the database
                     if (val1 == 0) {
-                      meal = 'breakfast';
+                      _ref = firebaseInstance
+                          .ref()
+                          .child('${user!.uid}/breakfast/$k');
+                      _ref.set({
+                        "name": _foodName.text,
+                        "count": _foodCount.text,
+                        "calories": calories,
+                        "totalFat": totalFat,
+                      }).asStream();
+                      _foodName.clear();
+                      _foodCount.clear();
+                      setState(() {
+                        val1 = -1.0;
+                      });
                     } else if (val1 == 1) {
-                      meal = 'lunch';
+                      _ref =
+                          firebaseInstance.ref().child('${user!.uid}/lunch/$k');
+                      _ref.set({
+                        "name": _foodName.text,
+                        "count": _foodCount.text,
+                        "calories": calories,
+                        "totalFat": totalFat,
+                      }).asStream();
+                      _foodName.clear();
+                      _foodCount.clear();
+                      setState(() {
+                        val1 = -1.0;
+                      });
                     } else if (val1 == 2) {
-                      meal = 'snacks';
+                      _ref = firebaseInstance
+                          .ref()
+                          .child('${user!.uid}/snacks/$k');
+                      _ref.set({
+                        "name": _foodName.text,
+                        "count": _foodCount.text,
+                        "calories": calories,
+                        "totalFat": totalFat,
+                      }).asStream();
+                      _foodName.clear();
+                      _foodCount.clear();
+                      setState(() {
+                        val1 = -1.0;
+                      });
                     } else if (val1 == 3) {
-                      meal = 'dinner';
+                      _ref = firebaseInstance
+                          .ref()
+                          .child('${user!.uid}/dinner/$k');
+                      _ref.set({
+                        "name": _foodName.text,
+                        "count": _foodCount.text,
+                        "calories": calories,
+                        "totalFat": totalFat,
+                      }).asStream();
+                      _foodName.clear();
+                      _foodCount.clear();
+                      setState(() {
+                        val1 = -1.0;
+                      });
                     } else {
-                      // showFlushBar(context);
                       return;
                     }
-                    _ref = firebaseInstance.ref().child('${user!.uid}/$meal/$k');
-                    _ref.set({
-                      "name": _foodName.text,
-                      "count": _foodCount.text,
-                    }).asStream();
-                    _foodName.clear();
-                    _foodCount.clear();
-                    setState(() {
-                      val1 = -1.0;
-                    });
                   },
-                  borderRadius: BorderRadius.circular(15),
-                  padding: const EdgeInsets.all(0), // No padding
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

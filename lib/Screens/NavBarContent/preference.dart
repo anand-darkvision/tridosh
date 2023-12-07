@@ -1222,7 +1222,7 @@ class _FoodPreferenceState extends State<FoodPreference> {
                     onPressed: () => showCupertinoModalPopup(
                       context: context,
                       builder: (_) => SizedBox(
-                        width: width * 0.01,
+                        width: double.infinity,
                         height: height * 0.3 + width * 0.01,
                         child: CupertinoPicker(
                           backgroundColor: Colors.white,
@@ -1253,7 +1253,7 @@ class _FoodPreferenceState extends State<FoodPreference> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'comfortaa',
-                                fontSize: width * 0.005 + height * 0.01,
+                                fontSize: width * 0.03 + height * 0.01,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -1394,13 +1394,13 @@ class _FoodPreferenceState extends State<FoodPreference> {
                             .collection('preference')
                             .doc('pref')
                             .set({
-                          "Location": defaultLocation,
-                          "Food Item": defaultFoodItem,
-                          "Food Taste": defaultFoodtaste,
-                          "Smoke": defaultSmoke,
-                          "Alcohol": defaultAlcohol,
-                          "Comorbities": defaultComorb,
-                          "Allergies": defaultAllergy,
+                          "Location": locationList[_location],
+                          "Food Item": foodTypeList[_foodType],
+                          "Food Taste": foodTasteList[_foodTaste],
+                          "Smoke": yesOrNo[_youSmoke],
+                          "Alcohol": yesOrNo[_youAlcoholic],
+                          "Comorbities": comorBities[_comorb],
+                          "Allergies": allergies[_allergies],
                         });
                         Navigator.pushNamed(context, '/homepage');
                       },
@@ -1421,7 +1421,7 @@ class _FoodPreferenceState extends State<FoodPreference> {
                             Icon(
                               Icons.arrow_right_rounded,
                               color: Colors.white,
-                              size: height * 0.020 + width * 0.01,
+                              size: height * 0.018 + width * 0.01,
                             )
                           ],
                         ),

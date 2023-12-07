@@ -7,16 +7,16 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../Service/diet.dart'; // Replace with the actual import path
+import '../../../Service/diet.dart';
 
-class WeeklyDiet extends StatefulWidget {
-  const WeeklyDiet({Key? key});
+class SaturdayDiet extends StatefulWidget {
+  const SaturdayDiet({super.key});
 
   @override
-  State<WeeklyDiet> createState() => _WeeklyDietState();
+  State<SaturdayDiet> createState() => _SaturdayDietState();
 }
 
-class _WeeklyDietState extends State<WeeklyDiet> {
+class _SaturdayDietState extends State<SaturdayDiet> {
   late String location = '';
   late String foodItem = '';
   late String foodTaste = '';
@@ -27,10 +27,10 @@ class _WeeklyDietState extends State<WeeklyDiet> {
   String alco = "";
   String smok = "";
   String? bodyType;
-  late List<String> mondayDietBreakfast;
-  late List<String> mondayDietLunch;
-  late List<String> mondayDietSnacks;
-  late List<String> mondayDietDinner;
+  late List<String> saturdayDietBreakfast;
+  late List<String> saturdayDietLunch;
+  late List<String> saturdayDietSnacks;
+  late List<String> saturdayDietDinner;
   late int storedWeekNumber;
 
   User? user = FirebaseAuth.instance.currentUser!;
@@ -46,7 +46,7 @@ class _WeeklyDietState extends State<WeeklyDiet> {
 
   Future<void> generateDietPlanIfNeeded() async {
     final prefs = await SharedPreferences.getInstance();
-    final lastPlanDateString = prefs.getString('lastPlanDateMonday');
+    final lastPlanDateString = prefs.getString('lastPlanDateSaturday');
     DateTime? lastPlanDate;
     if (lastPlanDateString != null) {
       lastPlanDate = DateTime.parse(lastPlanDateString);
@@ -102,22 +102,22 @@ class _WeeklyDietState extends State<WeeklyDiet> {
         smok = "Smoker";
       });
     }
-    mondayDietBreakfast = await getFoodRecommendations(
+    saturdayDietBreakfast = await getFoodRecommendations(
       time: 'breakfast',
       bodyType: bodyType!,
       disabilities: [comorbities, alco, smok],
     );
-    mondayDietLunch = await getFoodRecommendations(
+    saturdayDietLunch = await getFoodRecommendations(
       time: 'lunch',
       bodyType: bodyType!,
       disabilities: [comorbities, alco, smok],
     );
-    mondayDietSnacks = await getFoodRecommendations(
+    saturdayDietSnacks = await getFoodRecommendations(
       time: 'snack',
       bodyType: bodyType!,
       disabilities: [comorbities, alco, smok],
     );
-    mondayDietDinner = await getFoodRecommendations(
+    saturdayDietDinner = await getFoodRecommendations(
       time: 'dinner',
       bodyType: bodyType!,
       disabilities: [comorbities, alco, smok],
@@ -125,20 +125,20 @@ class _WeeklyDietState extends State<WeeklyDiet> {
 
     final random = Random();
 
-    final mondayDiet_breakfast =
-        mondayDietBreakfast[random.nextInt(mondayDietBreakfast.length)];
-    final mondayDiet_lunch =
-        mondayDietLunch[random.nextInt(mondayDietLunch.length)];
-    final mondayDiet_snacks =
-        mondayDietSnacks[random.nextInt(mondayDietSnacks.length)];
-    final mondayDiet_dinner =
-        mondayDietDinner[random.nextInt(mondayDietDinner.length)];
+    final saturdayDiet_breakfast =
+        saturdayDietBreakfast[random.nextInt(saturdayDietBreakfast.length)];
+    final saturdayDiet_lunch =
+        saturdayDietLunch[random.nextInt(saturdayDietLunch.length)];
+    final saturdayDiet_snacks =
+        saturdayDietSnacks[random.nextInt(saturdayDietSnacks.length)];
+    final saturdayDiet_dinner =
+        saturdayDietDinner[random.nextInt(saturdayDietDinner.length)];
 
-    pref.setString('mondayBreakfast', jsonEncode(mondayDiet_breakfast));
-    pref.setString('mondayLunch', jsonEncode(mondayDiet_lunch));
-    pref.setString('mondaySnacks', jsonEncode(mondayDiet_snacks));
-    pref.setString('mondayDinner', jsonEncode(mondayDiet_dinner));
-    pref.setString('lastPlanDateMonday', now.toIso8601String());
+    pref.setString('saturdayBreakfast', jsonEncode(saturdayDiet_breakfast));
+    pref.setString('saturdayLunch', jsonEncode(saturdayDiet_lunch));
+    pref.setString('saturdaySnacks', jsonEncode(saturdayDiet_snacks));
+    pref.setString('saturdayDinner', jsonEncode(saturdayDiet_dinner));
+    pref.setString('lastPlanDateSaturday', now.toIso8601String());
   }
 
   @override
@@ -170,7 +170,7 @@ class _WeeklyDietState extends State<WeeklyDiet> {
                   SizedBox(width: width * 0.22 + height * 0.01),
                   Center(
                     child: Text(
-                      "Monday",
+                      "Saturday",
                       style: TextStyle(
                         fontSize: height * 0.015 + width * 0.02,
                         color: Colors.black,
@@ -191,10 +191,10 @@ class _WeeklyDietState extends State<WeeklyDiet> {
                 ),
               ),
               SizedBox(height: height * 0.03),
-              buildDietRow("Breakfast", "mondayBreakfast"),
-              buildDietRow("Lunch", "mondayLunch"),
-              buildDietRow("Snacks", "mondaySnacks"),
-              buildDietRow("Dinner", "mondayDinner"),
+              buildDietRow("Breakfast", "saturdayBreakfast"),
+              buildDietRow("Lunch", "saturdayLunch"),
+              buildDietRow("Snacks", "saturdaySnacks"),
+              buildDietRow("Dinner", "saturdayDinner"),
             ],
           ),
         ),

@@ -1,5 +1,9 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,131 +17,129 @@ class TuesdayDiet extends StatefulWidget {
 }
 
 class _TuesdayDietState extends State<TuesdayDiet> {
+  late String location = '';
+  late String foodItem = '';
+  late String foodTaste = '';
+  late String smoke = '';
+  late String alcohol = '';
+  late String comorbities = '';
+  late String allergies = '';
+  String alco = "";
+  String smok = "";
   String? bodyType;
   late List<String> tuesdayDietBreakfast;
   late List<String> tuesdayDietLunch;
   late List<String> tuesdayDietSnacks;
   late List<String> tuesdayDietDinner;
-  late String
-      tuesdayDietPlanKey; // Key to store and check diet plan for the week
-  late int tuesdayStoredWeekNumber; // Week number stored in SharedPreferences
+  late int storedWeekNumber;
 
-  // Method to fetch and store the Monday diet recommendations
-  Future<void> getMondayDiet() async {
-    print("Get monday diet function working");
-    final SharedPreferences pref = await SharedPreferences.getInstance();
-    setState(() {
-      bodyType = pref.getString("BodyType");
-    });
+  User? user = FirebaseAuth.instance.currentUser!;
+  final database = FirebaseDatabase.instance;
 
-    if (bodyType == null) {
-      bodyType = "Find Body type to View Food";
-    }
-
-    // Use the intl package to calculate the week number
-    final DateTime now = DateTime.now();
-    final int weekNumber =
-        (now.difference(DateTime(now.year)).inDays / 7).ceil();
-
-    // Generate a key for this week's diet plan
-    tuesdayDietPlanKey = "DietPlan_${DateTime.now().year}_Week_$weekNumber";
-
-    // Check if the diet plan for this week already exists
-    if (pref.getString(tuesdayDietPlanKey) == null) {
-      // If not, generate a new diet plan for this week
-      tuesdayDietBreakfast = await getFoodRecommendations(
-        time: 'breakfast',
-        bodyType: bodyType!,
-        disabilities: [],
-      );
-      tuesdayDietLunch = await getFoodRecommendations(
-        time: 'lunch',
-        bodyType: bodyType!,
-        disabilities: [],
-      );
-      tuesdayDietSnacks = await getFoodRecommendations(
-        time: 'snack',
-        bodyType: bodyType!,
-        disabilities: [],
-      );
-      tuesdayDietDinner = await getFoodRecommendations(
-        time: 'dinner',
-        bodyType: bodyType!,
-        disabilities: [],
-      );
-
-      // Store the randomly selected food items for a week
-      final random = Random();
-      final tuesdayBreakfast =
-          tuesdayDietBreakfast[random.nextInt(tuesdayDietBreakfast.length)];
-      final tuesdayLunch =
-          tuesdayDietLunch[random.nextInt(tuesdayDietLunch.length)];
-      final tuesdaySnacks =
-          tuesdayDietSnacks[random.nextInt(tuesdayDietSnacks.length)];
-      final tuesdayDinner =
-          tuesdayDietDinner[random.nextInt(tuesdayDietDinner.length)];
-
-      pref.setString("TuesdayBreakfast", tuesdayBreakfast);
-      pref.setString("TuesdayLunch", tuesdayLunch);
-      pref.setString("TuesdaySnacks", tuesdaySnacks);
-      pref.setString("TuesdayDinner", tuesdayDinner);
-
-      // Store the current week number in SharedPreferences
-      pref.setInt("TuesdayCurrentWeek", weekNumber);
-    } else {
-      // If the diet plan for this week already exists, check if it's a new week
-      tuesdayStoredWeekNumber = pref.getInt("TuesdayCurrentWeek") ?? 0;
-      final tuesdayCurrentWeekNumber = weekNumber;
-
-      if (tuesdayCurrentWeekNumber != tuesdayStoredWeekNumber) {
-        // If it's a new week, generate a new diet plan
-        tuesdayDietBreakfast = await getFoodRecommendations(
-          time: 'breakfast',
-          bodyType: bodyType!,
-          disabilities: [],
-        );
-        tuesdayDietLunch = await getFoodRecommendations(
-          time: 'lunch',
-          bodyType: bodyType!,
-          disabilities: [],
-        );
-        tuesdayDietSnacks = await getFoodRecommendations(
-          time: 'snack',
-          bodyType: bodyType!,
-          disabilities: [],
-        );
-        tuesdayDietDinner = await getFoodRecommendations(
-          time: 'dinner',
-          bodyType: bodyType!,
-          disabilities: [],
-        );
-
-        // Store the randomly selected food items for a week
-        final random = Random();
-        final tuesdayBreakfast =
-            tuesdayDietBreakfast[random.nextInt(tuesdayDietBreakfast.length)];
-        final tuesdayLunch =
-            tuesdayDietLunch[random.nextInt(tuesdayDietLunch.length)];
-        final tuesdaySnacks =
-            tuesdayDietSnacks[random.nextInt(tuesdayDietSnacks.length)];
-        final tuesdayDinner =
-            tuesdayDietDinner[random.nextInt(tuesdayDietDinner.length)];
-
-        pref.setString("TuesdayBreakfast", tuesdayBreakfast);
-        pref.setString("TuesdayLunch", tuesdayLunch);
-        pref.setString("TuesdaySnacks", tuesdaySnacks);
-        pref.setString("TuesdayDinner", tuesdayDinner);
-
-        // Update the stored week number
-        pref.setInt("TuesdayCurrentWeek", tuesdayCurrentWeekNumber);
-      }
-    }
-  }
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
     super.initState();
-    getMondayDiet();
+    generateDietPlanIfNeeded();
+  }
+
+  Future<void> generateDietPlanIfNeeded() async {
+    final prefs = await SharedPreferences.getInstance();
+    final lastPlanDateString = prefs.getString('lastPlanDateTuesday');
+    DateTime? lastPlanDate;
+    if (lastPlanDateString != null) {
+      lastPlanDate = DateTime.parse(lastPlanDateString);
+    }
+    final now = DateTime.now();
+    if (lastPlanDate == null || now.difference(lastPlanDate).inDays > 7) {
+      await generateNewDietPlan();
+    }
+  }
+
+  Future<void> generateNewDietPlan() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    final now = DateTime.now();
+
+    setState(() {
+      bodyType = pref.getString("BodyType");
+    });
+    try {
+      DocumentSnapshot docSnapshot = await firebaseFirestore
+          .collection('users')
+          .doc(user!.email)
+          .collection('preference')
+          .doc('pref')
+          .get();
+
+      if (docSnapshot.exists) {
+        Map<String, dynamic> data = docSnapshot.data() as Map<String, dynamic>;
+        setState(() {
+          location = data['Location'];
+          foodItem = data['Food Item'];
+          foodTaste = data['Food Taste'];
+          smoke = data['Smoke'];
+          alcohol = data['Alcohol'];
+          comorbities = data['Comorbities'];
+          allergies = data['Allergies'];
+        });
+      } else {
+        print('No preferences found for this user.');
+      }
+    } catch (e) {
+      print('Error fetching preferences: $e');
+    }
+
+    if (bodyType == null) {
+      bodyType = "Find Body type to View Food";
+    }
+    if (alcohol == "Yes") {
+      setState(() {
+        alco = "Alcoholic";
+      });
+    }
+    if (smoke == "Yes") {
+      setState(() {
+        smok = "Smoker";
+      });
+    }
+    tuesdayDietBreakfast = await getFoodRecommendations(
+      time: 'breakfast',
+      bodyType: bodyType!,
+      disabilities: [comorbities, alco, smok],
+    );
+    tuesdayDietLunch = await getFoodRecommendations(
+      time: 'lunch',
+      bodyType: bodyType!,
+      disabilities: [comorbities, alco, smok],
+    );
+    tuesdayDietSnacks = await getFoodRecommendations(
+      time: 'snack',
+      bodyType: bodyType!,
+      disabilities: [comorbities, alco, smok],
+    );
+    tuesdayDietDinner = await getFoodRecommendations(
+      time: 'dinner',
+      bodyType: bodyType!,
+      disabilities: [comorbities, alco, smok],
+    );
+
+    final random = Random();
+
+    final tuesdayDiet_breakfast =
+        tuesdayDietBreakfast[random.nextInt(tuesdayDietBreakfast.length)];
+    final tuesdayDiet_lunch =
+        tuesdayDietLunch[random.nextInt(tuesdayDietLunch.length)];
+    final tuesdayDiet_snacks =
+        tuesdayDietSnacks[random.nextInt(tuesdayDietSnacks.length)];
+    final tuesdayDiet_dinner =
+        tuesdayDietDinner[random.nextInt(tuesdayDietDinner.length)];
+
+    pref.setString('tuesdayBreakfast', jsonEncode(tuesdayDiet_breakfast));
+    pref.setString('tuesdayLunch', jsonEncode(tuesdayDiet_lunch));
+    pref.setString('tuesdaySnacks', jsonEncode(tuesdayDiet_snacks));
+    pref.setString('tuesdayDinner', jsonEncode(tuesdayDiet_dinner));
+    pref.setString('lastPlanDateTuesday', now.toIso8601String());
   }
 
   @override
@@ -147,254 +149,99 @@ class _TuesdayDietState extends State<TuesdayDiet> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: <Widget>[
-          SizedBox(
-            height: height * 0.02 + width * 0.1,
-          ),
-          Row(
-            children: <Widget>[
-              SizedBox(
-                width: width * 0.001 + height * 0.001,
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios_new_outlined,
-                  size: height * 0.03 + width * 0.01,
-                  color: Colors.grey[400],
-                ),
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/maindiet');
-                },
-              ),
-              SizedBox(
-                width: width * 0.23 + height * 0.01,
-              ),
-              Center(
-                child: Text(
-                  "Tuesday",
-                  style: TextStyle(
-                    fontSize: height * 0.015 + width * 0.02,
-                    color: Colors.black,
-                    fontFamily: "Comfortaa",
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: height * 0.07 + width * 0.02,
-          ),
-          Column(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: height * 0.01 + width * 0.01,
-              ),
+            children: <Widget>[
+              SizedBox(height: height * 0.02),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    "Fuel your body",
-                    style: TextStyle(
-                      fontSize: height * 0.02 + width * 0.02,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Comfortaa",
-                      color: Colors.black,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios_new_outlined,
+                      size: height * 0.03 + width * 0.01,
+                      color: Colors.grey[400],
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/maindiet');
+                    },
+                  ),
+                  SizedBox(width: width * 0.22 + height * 0.01),
+                  Center(
+                    child: Text(
+                      "Tuesday",
+                      style: TextStyle(
+                        fontSize: height * 0.015 + width * 0.02,
+                        color: Colors.black,
+                        fontFamily: "Comfortaa",
+                      ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(
-                height: height * 0.07 + width * 0.01,
+              SizedBox(height: height * 0.03),
+              Text(
+                "Eat for health",
+                style: TextStyle(
+                  fontSize: height * 0.02 + width * 0.02,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Comfortaa",
+                  color: Colors.black,
+                ),
               ),
-              // Display the breakfast recommendation
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: width * 0.03 + height * 0.01,
-                  ),
-                  Text(
-                    "Breakfast : ",
-                    style: TextStyle(
-                      fontSize: height * 0.012 + width * 0.02,
-                      fontWeight: FontWeight.normal,
-                      fontFamily: "Comfortaa",
-                      color: Colors.black,
-                    ),
-                  ),
-                  Flexible(
-                    child: FutureBuilder<String>(
-                      future: SharedPreferences.getInstance().then((pref) {
-                        return pref.getString("TuesdayBreakfast") ?? "Error";
-                      }),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasData) {
-                          return Text(
-                            snapshot.data!,
-                            style: TextStyle(
-                              fontSize: height * 0.012 + width * 0.02,
-                              fontWeight: FontWeight.normal,
-                              fontFamily: "Comfortaa",
-                              color: Colors.black45,
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text("Error: ${snapshot.error}");
-                        }
-                        return Text("No data available.");
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01 + width * 0.01,
-              ),
-              // Display lunch, snacks, and dinner recommendations here
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: width * 0.03 + height * 0.01,
-                  ),
-                  Text(
-                    "Lunch : ",
-                    style: TextStyle(
-                      fontSize: height * 0.012 + width * 0.02,
-                      fontWeight: FontWeight.normal,
-                      fontFamily: "Comfortaa",
-                      color: Colors.black,
-                    ),
-                  ),
-                  Flexible(
-                    child: FutureBuilder<String>(
-                      future: SharedPreferences.getInstance().then((pref) {
-                        return pref.getString("TuesdayLunch") ?? "Error";
-                      }),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasData) {
-                          return Text(
-                            snapshot.data!,
-                            style: TextStyle(
-                              fontSize: height * 0.012 + width * 0.02,
-                              fontWeight: FontWeight.normal,
-                              fontFamily: "Comfortaa",
-                              color: Colors.black45,
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text("Error: ${snapshot.error}");
-                        }
-                        return Text("No data available.");
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01 + width * 0.01,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: width * 0.03 + height * 0.01,
-                  ),
-                  Text(
-                    "Snacks : ",
-                    style: TextStyle(
-                      fontSize: height * 0.012 + width * 0.02,
-                      fontWeight: FontWeight.normal,
-                      fontFamily: "Comfortaa",
-                      color: Colors.black,
-                    ),
-                  ),
-                  Flexible(
-                    child: FutureBuilder<String>(
-                      future: SharedPreferences.getInstance().then((pref) {
-                        return pref.getString("TuesdaySnacks") ?? "Error";
-                      }),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasData) {
-                          return Text(
-                            snapshot.data!,
-                            style: TextStyle(
-                              fontSize: height * 0.012 + width * 0.02,
-                              fontWeight: FontWeight.normal,
-                              fontFamily: "Comfortaa",
-                              color: Colors.black45,
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text("Error: ${snapshot.error}");
-                        }
-                        return Text("No data available.");
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01 + width * 0.01,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: width * 0.03 + height * 0.01,
-                  ),
-                  Text(
-                    "Dinner : ",
-                    style: TextStyle(
-                      fontSize: height * 0.012 + width * 0.02,
-                      fontWeight: FontWeight.normal,
-                      fontFamily: "Comfortaa",
-                      color: Colors.black,
-                    ),
-                  ),
-                  Flexible(
-                    child: FutureBuilder<String>(
-                      future: SharedPreferences.getInstance().then((pref) {
-                        return pref.getString("TuesdayDinner") ?? "Error";
-                      }),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasData) {
-                          return Text(
-                            snapshot.data!,
-                            style: TextStyle(
-                              fontSize: height * 0.012 + width * 0.02,
-                              fontWeight: FontWeight.normal,
-                              fontFamily: "Comfortaa",
-                              color: Colors.black45,
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text("Error: ${snapshot.error}");
-                        }
-                        return Text("No data available.");
-                      },
-                    ),
-                  ),
-                ],
-              ),
+              SizedBox(height: height * 0.03),
+              buildDietRow("Breakfast", "tuesdayBreakfast"),
+              buildDietRow("Lunch", "tuesdayLunch"),
+              buildDietRow("Snacks", "tuesdaySnacks"),
+              buildDietRow("Dinner", "tuesdayDinner"),
             ],
           ),
-        ],
+        ),
       ),
+    );
+  }
+
+  Widget buildDietRow(String label, String prefKey) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "$label :",
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.normal,
+            fontFamily: "Comfortaa",
+            color: Colors.black,
+          ),
+        ),
+        SizedBox(height: 8),
+        FutureBuilder<String>(
+          future: SharedPreferences.getInstance().then((pref) {
+            return pref.getString(prefKey) ?? "No data in preferences";
+          }),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasData) {
+              return Text(
+                snapshot.data!,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: "Comfortaa",
+                  color: Colors.black45,
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Text("Error: ${snapshot.error}");
+            }
+            return Text("No data available.");
+          },
+        ),
+        SizedBox(height: 16),
+      ],
     );
   }
 }
