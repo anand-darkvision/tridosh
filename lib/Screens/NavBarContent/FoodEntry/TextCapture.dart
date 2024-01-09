@@ -28,6 +28,8 @@ class _TextCaptureState extends State<TextCapture> {
   var calories = 0.0;
   var totalFat = 0.0;
 
+  DateTime currentDate = DateTime.now();
+
   void showFlushBar(BuildContext context) {
     Flushbar(
       flushbarPosition: FlushbarPosition.TOP,
@@ -351,7 +353,8 @@ class _TextCaptureState extends State<TextCapture> {
                       "name": _foodName.text,
                       "count": _foodCount.text,
                       "calories": calories, // Provide the actual value
-                      "totalFat": totalFat, // Provide the actual value
+                      "totalFat": totalFat,
+                      "date": currentDate, // Provide the actual value
                     }).asStream();
                     _foodName.clear();
                     _foodCount.clear();
@@ -366,6 +369,7 @@ class _TextCaptureState extends State<TextCapture> {
                       "count": _foodCount.text,
                       "calories": calories,
                       "totalFat": totalFat,
+                      "date": currentDate,
                     }).asStream();
                     _foodName.clear();
                     _foodCount.clear();
@@ -380,6 +384,7 @@ class _TextCaptureState extends State<TextCapture> {
                       "count": _foodCount.text,
                       "calories": calories,
                       "totalFat": totalFat,
+                      "date": currentDate,
                     }).asStream();
                     _foodName.clear();
                     _foodCount.clear();
@@ -394,6 +399,7 @@ class _TextCaptureState extends State<TextCapture> {
                       "count": _foodCount.text,
                       "calories": calories,
                       "totalFat": totalFat,
+                      "date": currentDate,
                     }).asStream();
                     _foodName.clear();
                     _foodCount.clear();
@@ -574,6 +580,7 @@ class _TextCaptureState extends State<TextCapture> {
                           .ref()
                           .child('${user!.uid}/breakfast/$k');
                       _ref.set({
+                        "date": currentDate,
                         "name": _foodName.text,
                         "count": _foodCount.text,
                         "calories": calories,
@@ -588,6 +595,7 @@ class _TextCaptureState extends State<TextCapture> {
                       _ref =
                           firebaseInstance.ref().child('${user!.uid}/lunch/$k');
                       _ref.set({
+                        "date": currentDate,
                         "name": _foodName.text,
                         "count": _foodCount.text,
                         "calories": calories,
@@ -603,6 +611,7 @@ class _TextCaptureState extends State<TextCapture> {
                           .ref()
                           .child('${user!.uid}/snacks/$k');
                       _ref.set({
+                        "date": currentDate,
                         "name": _foodName.text,
                         "count": _foodCount.text,
                         "calories": calories,
@@ -618,6 +627,7 @@ class _TextCaptureState extends State<TextCapture> {
                           .ref()
                           .child('${user!.uid}/dinner/$k');
                       _ref.set({
+                        "date": currentDate,
                         "name": _foodName.text,
                         "count": _foodCount.text,
                         "calories": calories,

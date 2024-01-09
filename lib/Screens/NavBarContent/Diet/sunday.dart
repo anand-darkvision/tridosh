@@ -194,6 +194,19 @@ class _SundayDietState extends State<SundayDiet> {
               buildDietRow("Lunch", "sundayLunch"),
               buildDietRow("Snacks", "sundaySnacks"),
               buildDietRow("Dinner", "sundayDinner"),
+              SizedBox(height: height * 0.09),
+              Center(
+                child: Container(
+                  width: width * 0.69 + height * 0.1,
+                  height: height * 0.4 + width * 0.1,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    image: DecorationImage(
+                      image: AssetImage('Assets/image/sunday.png'),
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),

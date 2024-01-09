@@ -123,6 +123,15 @@ flutter:
     - Assets/Data/finalfoodis.csv
     - Assets/image/Icecream.png
     - Assets/image/eat.png
+    - Assets/image/monday.png
+    - Assets/image/tuesday.png
+    - Assets/image/wednesday.png
+    - Assets/image/thursday.png
+    - Assets/image/friday.png
+    - Assets/image/saturday.png
+    - Assets/image/sunday.png
+    - Assets/image/splash2.png
+    - Assets/image/warning.jpg
 
     # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

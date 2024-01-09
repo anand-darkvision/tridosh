@@ -487,7 +487,7 @@ class _MainDietState extends State<MainDiet> {
                   ],
                 ),
                 SizedBox(
-                  height: height * 0.05 + width * 0.01,
+                  height: height * 0.02 + width * 0.01,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -523,7 +523,7 @@ class _MainDietState extends State<MainDiet> {
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () {
-                        Navigator.pushNamed(context, '/maindiet');
+                        Navigator.pushNamed(context, '/thursdaydiet');
                       },
                       child: Center(
                         child: Row(
@@ -551,7 +551,7 @@ class _MainDietState extends State<MainDiet> {
                   ],
                 ),
                 SizedBox(
-                  height: height * 0.05 + width * 0.01,
+                  height: height * 0.02 + width * 0.01,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -559,7 +559,7 @@ class _MainDietState extends State<MainDiet> {
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () {
-                        Navigator.pushNamed(context, '/maindiet');
+                        Navigator.pushNamed(context, '/fridaydiet');
                       },
                       child: Center(
                         child: Row(
@@ -587,7 +587,7 @@ class _MainDietState extends State<MainDiet> {
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () {
-                        Navigator.pushNamed(context, '/maindiet');
+                        Navigator.pushNamed(context, '/saturdaydiet');
                       },
                       child: Center(
                         child: Row(
@@ -615,7 +615,7 @@ class _MainDietState extends State<MainDiet> {
                   ],
                 ),
                 SizedBox(
-                  height: height * 0.05 + width * 0.01,
+                  height: height * 0.02 + width * 0.01,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -623,7 +623,7 @@ class _MainDietState extends State<MainDiet> {
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () {
-                        Navigator.pushNamed(context, '/maindiet');
+                        Navigator.pushNamed(context, '/sundaydiet');
                       },
                       child: Center(
                         child: Row(
@@ -652,11 +652,10 @@ class _MainDietState extends State<MainDiet> {
                 ),
                 Center(
                   child: Container(
-                    width: width * 0.5 + height * 0.1,
-                    height: height * 0.5 + width * 0.1,
+                    width: width * 0.4 + height * 0.1,
+                    height: height * 0.35 + width * 0.1,
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
-                      border: Border.all(color: Colors.black),
                       image: DecorationImage(
                         image: AssetImage('Assets/image/eat.png'),
                       ),
