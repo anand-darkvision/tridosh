@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "280490071403-j9s4m6jgsm9k6p3gr6jb0h2hj4m1gtq5.apps.googleusercontent.com",
+          "client_id": "280490071403-l8akvv0kbv6qjo824dh8fp0g18bddhq9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.hext.dietrecall",
-            "certificate_hash": "b9ba55e1f497b88a5db776a8b3c15303d8610184"
+            "certificate_hash": "20afeba67d69efc1a52d6019beabe2037b66656c"
           }
         },
         {
