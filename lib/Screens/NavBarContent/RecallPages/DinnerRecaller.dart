@@ -33,7 +33,7 @@ class _DinnerRecallerState extends State<DinnerRecaller> {
                 padding: const EdgeInsets.all(20.0),
                 child: Container(
                   width: width * 0.25 + height * 0.25,
-                  height: height * 0.15 + width * 0.15,
+                  height: height * 0.19 + width * 0.15,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     color: const Color.fromARGB(255, 145, 199, 136),
@@ -44,6 +44,20 @@ class _DinnerRecallerState extends State<DinnerRecaller> {
                       SizedBox(
                         height: height * 0.01 + width * 0.01,
                       ),
+                      Row(
+                        children: [
+                          SizedBox(width: width * 0.05 + height * 0.01),
+                          Text(
+                            l[0],
+                            style: TextStyle(
+                              color: Colors.grey[200],
+                              fontFamily: "signikasemibold",
+                              fontSize: 18.0, // Adjust the font size
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20.0),
                       Row(
                         children: [
                           SizedBox(
@@ -58,7 +72,7 @@ class _DinnerRecallerState extends State<DinnerRecaller> {
                             ),
                           ),
                           Text(
-                            l[2],
+                            l[3],
                             style: TextStyle(
                               color: Colors.grey[200],
                               fontFamily: "signikasemibold",
@@ -84,7 +98,7 @@ class _DinnerRecallerState extends State<DinnerRecaller> {
                             ),
                           ),
                           Text(
-                            l[1],
+                            l[2],
                             style: TextStyle(
                               color: Colors.grey[200],
                               fontFamily: "signikasemibold",

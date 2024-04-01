@@ -18,7 +18,7 @@ class _BreakFastRecallerState extends State<BreakFastRecaller> {
   var l, g, k;
   @override
   Widget build(BuildContext context) {
-    final ref = fb.ref().child('${user!.uid}/breakfast');
+    final ref = fb.ref().child('${user!.uid}/breakfast').orderByChild('date');
 
     return FirebaseAnimatedList(
         query: ref,
@@ -52,9 +52,21 @@ class _BreakFastRecallerState extends State<BreakFastRecaller> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                      height: width * 0.01 +
-                          height * 0.01), // Adjust the spacing as needed
+                  SizedBox(height: width * 0.01 + height * 0.01),
+                  Row(
+                    children: [
+                      SizedBox(width: width * 0.01 + height * 0.01),
+                      Text(
+                        l[0],
+                        style: TextStyle(
+                          color: Colors.grey[200],
+                          fontFamily: "signikasemibold",
+                          fontSize: 18.0, // Adjust the font size
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20.0),
                   Row(
                     children: [
                       SizedBox(width: width * 0.01 + height * 0.01),
@@ -67,7 +79,7 @@ class _BreakFastRecallerState extends State<BreakFastRecaller> {
                         ),
                       ),
                       Text(
-                        l[2],
+                        l[3],
                         style: TextStyle(
                           color: Colors.grey[200],
                           fontFamily: "signikasemibold",
@@ -89,7 +101,7 @@ class _BreakFastRecallerState extends State<BreakFastRecaller> {
                         ),
                       ),
                       Text(
-                        l[1],
+                        l[2],
                         style: TextStyle(
                           color: Colors.grey[200],
                           fontFamily: "signikasemibold",
@@ -109,7 +121,10 @@ class _BreakFastRecallerState extends State<BreakFastRecaller> {
                           size: 30.0, // Adjust the icon size
                         ),
                         onPressed: () {
-                          ref.child(snapshot.key!).remove();
+                          FirebaseDatabase.instance
+                              .reference()
+                              .child('${user!.uid}/breakfast/${snapshot.key}')
+                              .remove();
                         },
                       ),
                     ],

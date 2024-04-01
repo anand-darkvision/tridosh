@@ -83,7 +83,10 @@ dependencies:
   intl: ^0.18.1
   #csv
   csv: ^5.0.2
+  #pdfviwer
   syncfusion_flutter_pdfviewer: ^20.4.54
+  #image
+  image: ^4.1.4
 
 dev_dependencies:
   flutter_test:
@@ -132,6 +135,8 @@ flutter:
     - Assets/image/sunday.png
     - Assets/image/splash2.png
     - Assets/image/warning.jpg
+    - Assets/model/model.tflite
+    - Assets/model/labels.txt
 
     # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

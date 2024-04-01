@@ -8,6 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class TextCapture extends StatefulWidget {
   const TextCapture({Key? key}) : super(key: key);
@@ -27,8 +28,6 @@ class _TextCaptureState extends State<TextCapture> {
 
   var calories = 0.0;
   var totalFat = 0.0;
-
-  DateTime currentDate = DateTime.now();
 
   void showFlushBar(BuildContext context) {
     Flushbar(
@@ -80,7 +79,7 @@ class _TextCaptureState extends State<TextCapture> {
                 .toDouble();
           });
 
-          print('Calories: $calories, Total Fat: $totalFat');
+          // print('Calories: $calories, Total Fat: $totalFat');
         }
       } else {
         throw Exception('Failed to fetch data');
@@ -92,8 +91,11 @@ class _TextCaptureState extends State<TextCapture> {
     }
   }
 
+  DateTime currentDate = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
+    String date = DateFormat('yyyy-MM-dd').format(currentDate);
     var rng = Random();
     var k = rng.nextInt(10000);
     var height = MediaQuery.of(context).size.height;
@@ -354,7 +356,7 @@ class _TextCaptureState extends State<TextCapture> {
                       "count": _foodCount.text,
                       "calories": calories, // Provide the actual value
                       "totalFat": totalFat,
-                      "date": currentDate, // Provide the actual value
+                      "date": date, // Provide the actual value
                     }).asStream();
                     _foodName.clear();
                     _foodCount.clear();
@@ -369,7 +371,8 @@ class _TextCaptureState extends State<TextCapture> {
                       "count": _foodCount.text,
                       "calories": calories,
                       "totalFat": totalFat,
-                      "date": currentDate,
+                      "date": date,
+                      // "date": formattedDate,
                     }).asStream();
                     _foodName.clear();
                     _foodCount.clear();
@@ -384,7 +387,8 @@ class _TextCaptureState extends State<TextCapture> {
                       "count": _foodCount.text,
                       "calories": calories,
                       "totalFat": totalFat,
-                      "date": currentDate,
+                      "date": date,
+                      // "date": $formattedDate,
                     }).asStream();
                     _foodName.clear();
                     _foodCount.clear();
@@ -399,7 +403,8 @@ class _TextCaptureState extends State<TextCapture> {
                       "count": _foodCount.text,
                       "calories": calories,
                       "totalFat": totalFat,
-                      "date": currentDate,
+                      "date": date,
+                      // "date": $formattedDate,
                     }).asStream();
                     _foodName.clear();
                     _foodCount.clear();

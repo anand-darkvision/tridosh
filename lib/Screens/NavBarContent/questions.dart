@@ -231,7 +231,7 @@ class _QuestionsState extends State<Questions> {
                                   Text(
                                     "2.Body weight",
                                     style: TextStyle(
-                                      fontSize: width * 0.001 * height * 0.08,
+                                      fontSize: width * 0.001 * height * 0.07,
                                       color: Colors.grey[700],
                                       fontFamily: "signikasemibold",
                                     ),
@@ -631,7 +631,7 @@ class _QuestionsState extends State<Questions> {
                                   Text(
                                     "6.General feel of skin",
                                     style: TextStyle(
-                                      fontSize: width * 0.001 * height * 0.08,
+                                      fontSize: width * 0.001 * height * 0.07,
                                       color: Colors.grey[700],
                                       fontFamily: "signikasemibold",
                                     ),
@@ -731,7 +731,7 @@ class _QuestionsState extends State<Questions> {
                                   Text(
                                     "7.Texture of Skin",
                                     style: TextStyle(
-                                      fontSize: width * 0.001 * height * 0.08,
+                                      fontSize: width * 0.001 * height * 0.07,
                                       color: Colors.grey[700],
                                       fontFamily: "signikasemibold",
                                     ),
@@ -1131,7 +1131,7 @@ class _QuestionsState extends State<Questions> {
                                   Text(
                                     "11. Eyes",
                                     style: TextStyle(
-                                      fontSize: width * 0.001 * height * 0.08,
+                                      fontSize: width * 0.001 * height * 0.07,
                                       color: Colors.grey[700],
                                       fontFamily: "signikasemibold",
                                     ),

@@ -7,6 +7,7 @@ import 'package:dietrecall/Screens/NavBarContent/Diet/wednesdayDiet.dart';
 import 'package:dietrecall/Screens/NavBarContent/getReport.dart';
 import 'package:dietrecall/Screens/NavBarContent/preference.dart';
 import 'package:dietrecall/Screens/NavBarContent/recaller.dart';
+import 'package:dietrecall/Screens/NavBarContent/warning/warning.dart';
 import 'package:dietrecall/Screens/NutritionValue.dart';
 import 'package:dietrecall/Service/notifi_service.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -74,6 +75,8 @@ class _MainRouteState extends State<MainRoute> {
                 '/fridaydiet': (context) => const FridayDiet(),
                 '/saturdaydiet': (context) => const SaturdayDiet(),
                 '/sundaydiet': (context) => const SundayDiet(),
+                '/mainwarn': (context) => const Warning(),
+                /*'/mondaywarn': (context) => const FoodWarn(),*/
               },
               title: 'DietRecall',
               debugShowCheckedModeBanner: false,
@@ -105,6 +108,8 @@ class _MainRouteState extends State<MainRoute> {
                 '/fridaydiet': (context) => const FridayDiet(),
                 '/saturdaydiet': (context) => const SaturdayDiet(),
                 '/sundaydiet': (context) => const SundayDiet(),
+                '/mainwarn': (context) => const Warning(),
+                // '/mondaywarn': (context) => const FoodWarn(),
               },
               title: 'DietRecall',
               debugShowCheckedModeBanner: false,

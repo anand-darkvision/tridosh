@@ -51,7 +51,7 @@ class _WarningState extends State<Warning> {
                   style: TextStyle(
                     fontSize: height * 0.020 + width * 0.02,
                     color: Colors.black,
-                    fontFamily: "signikasemibold",
+                    fontFamily: "signikasemdibold",
                   ),
                 ),
                 SizedBox(
@@ -81,10 +81,10 @@ class _WarningState extends State<Warning> {
                                 width: height * 0.01 + width * 0.002,
                               ),
                               Text(
-                                'Monday',
+                                'BreakFast',
                                 style: TextStyle(
                                   color: const Color(0xFF9e9ac6),
-                                  fontSize: height * 0.013 + width * 0.01,
+                                  fontSize: height * 0.01 + width * 0.009,
                                 ),
                               ),
                               Icon(
@@ -118,10 +118,10 @@ class _WarningState extends State<Warning> {
                                 width: height * 0.01 + width * 0.002,
                               ),
                               Text(
-                                'Tuesday',
+                                'Lunch',
                                 style: TextStyle(
                                   color: const Color(0xFF9e9ac6),
-                                  fontSize: height * 0.013 + width * 0.01,
+                                  fontSize: height * 0.01 + width * 0.01,
                                 ),
                               ),
                               Icon(
@@ -163,10 +163,10 @@ class _WarningState extends State<Warning> {
                                 width: height * 0.001 + width * 0.001,
                               ),
                               Text(
-                                'Wednesday',
+                                'Snacks',
                                 style: TextStyle(
                                   color: const Color(0xFF9e9ac6),
-                                  fontSize: height * 0.011 + width * 0.01,
+                                  fontSize: height * 0.01 + width * 0.01,
                                 ),
                               ),
                               Icon(
@@ -200,10 +200,10 @@ class _WarningState extends State<Warning> {
                                 width: height * 0.01 + width * 0.002,
                               ),
                               Text(
-                                'Thursday',
+                                'Dinner',
                                 style: TextStyle(
                                   color: const Color(0xFF9e9ac6),
-                                  fontSize: height * 0.012 + width * 0.01,
+                                  fontSize: height * 0.01 + width * 0.01,
                                 ),
                               ),
                               Icon(
@@ -219,134 +219,10 @@ class _WarningState extends State<Warning> {
                   ],
                 ),
                 SizedBox(
-                  height: height * 0.05 + width * 0.01,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    SizedBox(
-                      height: height * 0.0024 + width * 0.1,
-                      width: height * 0.018 + width * 0.3,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 10,
-                          backgroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0)),
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/fridaydiet');
-                        },
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              SizedBox(
-                                width: height * 0.001 + width * 0.001,
-                              ),
-                              Text(
-                                'Friday',
-                                style: TextStyle(
-                                  color: const Color(0xFF9e9ac6),
-                                  fontSize: height * 0.013 + width * 0.01,
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_right_rounded,
-                                color: const Color(0xFF9e9ac6),
-                                size: height * 0.020 + width * 0.01,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: height * 0.0024 + width * 0.1,
-                      width: height * 0.018 + width * 0.3,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 10,
-                          backgroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0)),
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/saturdaydiet');
-                        },
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              SizedBox(
-                                width: height * 0.01 + width * 0.002,
-                              ),
-                              Text(
-                                'Saturday',
-                                style: TextStyle(
-                                  color: const Color(0xFF9e9ac6),
-                                  fontSize: height * 0.013 + width * 0.01,
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_right_rounded,
-                                color: const Color(0xFF9e9ac6),
-                                size: height * 0.015 + width * 0.01,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                  height: height * 0.1 + width * 0.01,
                 ),
                 SizedBox(
-                  height: height * 0.05 + width * 0.01,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SizedBox(
-                      height: height * 0.0024 + width * 0.1,
-                      width: height * 0.018 + width * 0.3,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 10,
-                          backgroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0)),
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/sundaydiet');
-                        },
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              SizedBox(
-                                width: height * 0.01 + width * 0.002,
-                              ),
-                              Text(
-                                'Sunday',
-                                style: TextStyle(
-                                  color: const Color(0xFF9e9ac6),
-                                  fontSize: height * 0.013 + width * 0.01,
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_right_rounded,
-                                color: const Color(0xFF9e9ac6),
-                                size: height * 0.020 + width * 0.01,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: height * 0.03 + width * 0.01,
+                  height: height * 0.1 + width * 0.01,
                 ),
                 Center(
                   child: Container(
@@ -541,104 +417,7 @@ class _WarningState extends State<Warning> {
                   ],
                 ),
                 SizedBox(
-                  height: height * 0.02 + width * 0.01,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/fridaydiet');
-                      },
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            SizedBox(
-                              width: height * 0.01 + width * 0.002,
-                            ),
-                            Text(
-                              'Friday',
-                              style: TextStyle(
-                                color: CupertinoColors.systemGrey,
-                                fontSize: height * 0.013 + width * 0.01,
-                              ),
-                            ),
-                            Icon(
-                              CupertinoIcons.right_chevron,
-                              color: CupertinoColors.systemGrey,
-                              size: height * 0.020 + width * 0.01,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/saturdaydiet');
-                      },
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            SizedBox(
-                              width: height * 0.01 + width * 0.002,
-                            ),
-                            Text(
-                              'Saturday',
-                              style: TextStyle(
-                                color: CupertinoColors.systemGrey,
-                                fontSize: height * 0.013 + width * 0.01,
-                              ),
-                            ),
-                            Icon(
-                              CupertinoIcons.right_chevron,
-                              color: CupertinoColors.systemGrey,
-                              size: height * 0.020 + width * 0.01,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: height * 0.02 + width * 0.01,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/sundaydiet');
-                      },
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            SizedBox(
-                              width: height * 0.01 + width * 0.002,
-                            ),
-                            Text(
-                              'Sunday',
-                              style: TextStyle(
-                                color: CupertinoColors.systemGrey,
-                                fontSize: height * 0.013 + width * 0.01,
-                              ),
-                            ),
-                            Icon(
-                              CupertinoIcons.right_chevron,
-                              color: CupertinoColors.systemGrey,
-                              size: height * 0.020 + width * 0.01,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                  height: height * 0.2 + width * 0.01,
                 ),
                 Center(
                   child: Container(
